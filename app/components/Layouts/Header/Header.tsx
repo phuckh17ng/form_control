@@ -26,7 +26,7 @@ const modeVariants = {
 };
 
 const Header = (props: Props) => {
-  const { serverTheme, serverMode } = props;
+  const { serverTheme } = props;
   const [isSliderMode, setSliderMode] = useState<boolean>(true);
   const [current, cycle] = useCycle("slider", "grid");
   const [theme, setTheme] = useState<string | undefined>(serverTheme);

@@ -14,7 +14,7 @@ type Props = {
 
 const ImdeterminateCheckbox = (props: Props) => {
   const { name, label, value, onChange, ...rest } = props;
-  const [, meta, helper] = useField(name);
+  const [, , helper] = useField(name);
 
   const handleOnChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

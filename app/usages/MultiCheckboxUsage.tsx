@@ -40,7 +40,7 @@ const MultiCheckboxUsage = () => {
   // Ref
   const checkedItems = useRef(new Map());
   // State
-  const [formValues, setFormValues] = useState<FormValues>();
+  const [, setFormValues] = useState<FormValues>();
 
   /**
    * Handle form submit

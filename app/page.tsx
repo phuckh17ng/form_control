@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
 import { IoRemove, IoSearch } from "react-icons/io5";
@@ -8,11 +7,11 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import Card from "./components/Card";
 import useDebounce from "./hooks/useDebounce";
+import "./styles.css";
 import { AutocompleteSyntax } from "./syntax/Autocomplete/Autocomplete";
 import AutocompleteUsage from "./usages/AutocompleteUsage";
 import MultiCheckboxUsage from "./usages/MultiCheckboxUsage";
 import PasswordUsage from "./usages/PasswordUsage";
-import "./styles.css";
 
 export type Item = {
   id: string;
