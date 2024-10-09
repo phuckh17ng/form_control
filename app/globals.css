@@ -2,26 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("../public/fonts/Pacifico/Pacifico-Regular.ttf");
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-background: #dbdbdb;
+  --color-card: #fff;
+  --color-text: #111;
+  --color-border: #111;
+  --color-icon: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-background: #2d2f47;
+    --color-card: #fff;
+    --color-text: #e2dad2;
+    --color-border: #e2dad2;
+    --color-icon: #111;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media screen and (width < 1540px) {
+  * {
+    font-size: 12px;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+:root {
+  --g1: rgba(63, 0, 151, 0.8);
+  --g2: rgb(236, 64, 122, 0.8);
+  --large: 8rem;
+  --small: 1rem;
+  --medium: 3rem;
+  --text-primary: #f6f5f5;
+  --orange: #ee6f57;
+  --blue: #1f3c88;
+  --dark-blue: #070d59;
+}
+
+@layer base {
+  :root {
+    --color-background: #dbdbdb;
+    --color-card: #fff;
+    --color-text: #111;
+    --color-border: #111;
+    --color-icon: #fff;
+  }
+
+  :root[class~="dark"] {
+    --color-background: #2d2f47;
+    --color-card: #fff;
+    --color-text: #e2dad2;
+    --color-border: #e2dad2;
+    --color-icon: #111;
   }
 }

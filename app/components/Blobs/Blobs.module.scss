@@ -1,0 +1,55 @@
+.blob {
+  position: absolute;
+  pointer-events: none;
+  filter: blur(10rem);
+
+  animation-name: spin;
+  animation-duration: 80000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.v1 {
+  left: 0%;
+  top: 0%;
+  width: 30%;
+  height: 50%;
+  background: conic-gradient(#54ebff, #ff8aef);
+}
+.v2 {
+  right: -20%;
+  top: 60%;
+  width: 30%;
+  height: 60%;
+  background: conic-gradient(from 2.35rad, #ffa154, #5cfff7);
+}
+.v3 {
+  left: 45%;
+  top: 50%;
+  width: 30%;
+  height: 50%;
+  background: conic-gradient(rgb(255, 138, 84), hsla(0, 100%, 62%, 0.29));
+}
+
+.v4 {
+  right: 15%;
+  bottom: -40%;
+  width: 30%;
+  height: 50%;
+  background: conic-gradient(rgb(91, 47, 47), hsl(200, 55%, 25%));
+}
+.v5 {
+  right: 30%;
+  bottom: -40%;
+  width: 50%;
+  height: 45%;
+  background: conic-gradient(var(--orange), var(--blue));
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
