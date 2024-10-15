@@ -9,15 +9,15 @@
   src: url("../public/fonts/Pacifico/Pacifico-Regular.ttf");
 }
 
-:root {
+/* :root {
   --color-background: #dbdbdb;
   --color-card: #fff;
   --color-text: #111;
   --color-border: #111;
   --color-icon: #fff;
-}
+} */
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #2d2f47;
     --color-card: #fff;
@@ -25,7 +25,7 @@
     --color-border: #e2dad2;
     --color-icon: #111;
   }
-}
+} */
 
 * {
   -ms-overflow-style: none;
@@ -62,11 +62,11 @@
     --color-card: #fff;
     --color-text: #111;
     --color-border: #111;
-    --color-icon: #fff;
+    --color-icon: rgba(255, 255, 255);
   }
 
   :root[class~="dark"] {
-    --color-background: #2d2f47;
+    --color-background: #2c2c2c;
     --color-card: #fff;
     --color-text: #e2dad2;
     --color-border: #e2dad2;

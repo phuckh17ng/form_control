@@ -9,41 +9,19 @@ import Card from "./components/Card";
 import useDebounce from "./hooks/useDebounce";
 import "./styles.css";
 import { AutocompleteSyntax } from "./syntax/Autocomplete/Autocomplete";
-import AutocompleteUsage from "./usages/AutocompleteUsage";
-import MultiCheckboxUsage from "./usages/MultiCheckboxUsage";
-import PasswordUsage from "./usages/PasswordUsage";
+import AutocompleteUsage from "./usages/Autocomplete/AutocompleteUsage";
+import MultiCheckboxUsage from "./usages/Checkbox/MultiCheckboxUsage";
+import RadioGroupUsage from "./usages/Radio/RadioGroupUsage";
+import PasswordUsage from "./usages/TextField/PasswordUsage";
+import SelectUsage from "./usages/Select/SelectUsage";
+import SliderUsage from "./usages/Slider/SliderUsage";
+import clsx from "clsx";
 
 export type Item = {
   id: string;
   title: string;
   content: JSX.Element;
 };
-
-const contents = [
-  {
-    id: "1",
-    title: "Autocomplete",
-    content: <AutocompleteUsage />,
-  },
-  {
-    id: "2",
-    title: "Multi Checkbox",
-    content: <MultiCheckboxUsage />,
-  },
-  { id: "3", title: "Password", content: <PasswordUsage /> },
-
-  {
-    id: "4",
-    title: "Autocomplete",
-    content: <AutocompleteUsage />,
-  },
-  {
-    id: "5",
-    title: "Multi Checkbox",
-    content: <MultiCheckboxUsage />,
-  },
-  { id: "6", title: "Password", content: <PasswordUsage /> },
-];
 
 export default function Home() {
   // Framer motion controls
@@ -55,6 +33,32 @@ export default function Home() {
   // State
   const [selectedCard, setSelectedCard] = useState<Item | undefined>();
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Contents Usage
+  const contents = [
+    { id: "password_id", title: "Password", content: <PasswordUsage /> },
+    {
+      id: "radio_group_id",
+      title: "Radio Group",
+      content: <RadioGroupUsage />,
+    },
+    { id: "select+id", title: "Select", content: <SelectUsage /> },
+    {
+      id: "autocomplete_id",
+      title: "Autocomplete",
+      content: <AutocompleteUsage />,
+    },
+    {
+      id: "multi_checkbox_id",
+      title: "Multi Checkbox",
+      content: <MultiCheckboxUsage />,
+    },
+    {
+      id: "slider_id",
+      title: "Slider",
+      content: <SliderUsage />,
+    },
+  ];
 
   // Hooks
   const debounce = useDebounce(searchTerm, 500);
@@ -79,8 +83,19 @@ export default function Home() {
     []
   );
 
+  const handleCardDetailsExit = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      console.log("event.key", event.key);
+      if (event.key === "Escape") {
+        setSelectedCard(undefined);
+      }
+    },
+    []
+  );
+
   return (
     <div className="w-full h-full">
+      {/* Introduction */}
       <section className="p-24 w-full flex flex-col items-center relative z-10">
         <div className="w-full">
           <h1 className="text-8xl font-thin text-center pb-4">Form Control</h1>
@@ -117,8 +132,9 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Cards Container */}
       <section className="py-24 w-screen flex justify-center items-center z-10 relative">
-        <div className="w-full h-full" ref={constraintsRef}>
+        <div className="w-full h-full cursor-grab" ref={constraintsRef}>
           <motion.div
             className="w-full min-w-fit"
             drag="x"
@@ -143,20 +159,17 @@ export default function Home() {
               })}
             </motion.div>
           </motion.div>
-
-          {/* <div className="bg-zinc-300 w-40 h-12 mt-16 rounded-full flex justify-between items-center px-4">
-            <div className="bg-black/30 w-6 h-6 rounded-full"></div>
-            <div className="bg-black/30 w-6 h-6 rounded-full"></div>
-            <div className="bg-black/30 w-6 h-6 rounded-full"></div>
-          </div> */}
         </div>
       </section>
 
+      {/* Card Details Expand */}
       <AnimatePresence>
         {selectedCard?.id && (
           <motion.div
             layoutId={selectedCard.id}
-            className="fixed top-0 left-0 z-[9999] text-black flex bg-white w-screen h-screen"
+            className="fixed top-0 left-0 z-[1000] text-black flex bg-white w-screen h-screen outline-none"
+            onKeyDown={handleCardDetailsExit}
+            tabIndex={0}
           >
             <div className="w-full h-full flex justify-between items-center">
               <div className="flex justify-between items-start absolute top-0 right-0 w-1/2 z-10 p-6">
@@ -236,7 +249,8 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <section className="fixed top-0 left-0 z-0 w-full h-screen opacity-35 mix-blend-multiply bg-background">
+      {/* Background Mask */}
+      <section className="fixed top-0 left-0 z-0 w-full h-screen opacity-35 mix-blend-multiply dark:bg-background bg-background">
         <video
           muted
           autoPlay

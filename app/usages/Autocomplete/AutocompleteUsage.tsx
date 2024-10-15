@@ -1,7 +1,7 @@
 import { FormikProvider, useFormik } from "formik";
 import { useCallback } from "react";
-import Autocomplete from "../components/Inputs/Autocomplete";
-import top100Films from "../database/top100Films";
+import Autocomplete from "../../components/Inputs/Autocomplete";
+import top100Films from "../../database/top100Films";
 
 type FormValues = {
   auto_complete?: string;

@@ -1,0 +1,36 @@
+.textContainer {
+  --duration: 0.5s;
+  position: relative;
+  cursor: pointer;
+  transition: transform var(--duration);
+  transform-style: preserve-3d;
+}
+
+.textContainer p {
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  margin: 0px;
+  transition: transform var(--duration), opacity var(--duration);
+  height: 28px;
+}
+
+.textContainer .secondary {
+  transform: rotateX(-90deg) translateY(50%);
+  transform-origin: bottom center;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.textContainer:hover {
+  transform: rotateX(90deg);
+}
+
+.textContainer:hover .primary {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.textContainer:hover .secondary {
+  opacity: 1;
+}

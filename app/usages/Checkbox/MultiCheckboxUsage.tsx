@@ -1,8 +1,8 @@
 "use client";
 
+import { Checkbox } from "@/app/components/Inputs/Checkbox";
 import { FormikProvider, useFormik } from "formik";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Checkbox } from "../components/Inputs/Checkbox";
 
 const checkboxList = [
   {

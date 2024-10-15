@@ -1,7 +1,7 @@
+import TextField from "@/app/components/Inputs/TextField";
+import { passwordValidationSchema } from "@/app/validations/password";
 import { FormikProvider, useFormik } from "formik";
 import { useCallback } from "react";
-import TextField from "../components/Inputs/TextField";
-import { passwordValidationSchema } from "../validations/password";
 
 type FormValues = {
   old_password?: string | number;
