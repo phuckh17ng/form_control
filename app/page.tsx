@@ -12,10 +12,9 @@ import { AutocompleteSyntax } from "./syntax/Autocomplete/Autocomplete";
 import AutocompleteUsage from "./usages/Autocomplete/AutocompleteUsage";
 import MultiCheckboxUsage from "./usages/Checkbox/MultiCheckboxUsage";
 import RadioGroupUsage from "./usages/Radio/RadioGroupUsage";
-import PasswordUsage from "./usages/TextField/PasswordUsage";
 import SelectUsage from "./usages/Select/SelectUsage";
 import SliderUsage from "./usages/Slider/SliderUsage";
-import clsx from "clsx";
+import PasswordUsage from "./usages/TextField/PasswordUsage";
 
 export type Item = {
   id: string;
