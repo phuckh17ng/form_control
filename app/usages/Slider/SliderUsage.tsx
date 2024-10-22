@@ -50,7 +50,7 @@ const SliderUsage = () => {
         </div>
       </FormikProvider>
     ),
-    []
+    [formikBag, handleSliderChange]
   );
 };
 

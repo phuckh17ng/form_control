@@ -1,6 +1,3 @@
-import TextField from "@/app/components/Inputs/TextField";
-import PasswordUsage from "@/app/usages/TextField/PasswordUsage";
-
 export const PasswordUsageSyntax = `
 import TextField from "@/app/components/Inputs/TextField";
 import { passwordValidationSchema } from "@/app/validations/password";
