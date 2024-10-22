@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { cookies } from "next/headers";
-import Header from "./components/Layouts/Header/Header";
+import SmoothScrolling from "./components/Scrolling/SmoothScrolling";
 import "./globals.css";
+import dynamic from "next/dynamic";
+import MainLayout from "./components/Layouts/MainLayout";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -16,17 +18,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const theme = cookies().get("theme");
-  const mode = cookies().get("mode");
+  const theme = cookies().get("theme")?.value || "light";
+  const mode = cookies().get("mode")?.value || "slider";
   return (
     <html
       lang="en"
-      className={theme?.value}
+      className={theme}
       style={{ fontFamily: plusJakartaSans.style.fontFamily }}
     >
       <body className="bg-background text-primary transition-all duration-500">
-        <Header serverTheme={theme?.value} serverMode={mode?.value} />
-        {children}
+        <SmoothScrolling>
+          <MainLayout theme={theme} mode={mode}>
+            {children}
+          </MainLayout>
+        </SmoothScrolling>
       </body>
     </html>
   );

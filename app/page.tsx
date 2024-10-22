@@ -1,14 +1,20 @@
 "use client";
 
+import clsx from "clsx";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
-import { IoRemove, IoSearch } from "react-icons/io5";
+import {
+  IoCheckmark,
+  IoCopyOutline,
+  IoRemove,
+  IoSearch,
+} from "react-icons/io5";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import Card from "./components/Card";
 import useDebounce from "./hooks/useDebounce";
 import "./styles.css";
-import { AutocompleteSyntax } from "./syntax/Autocomplete/Autocomplete";
+import { PasswordSyntax, PasswordUsageSyntax } from "./syntax/Password";
 import AutocompleteUsage from "./usages/Autocomplete/AutocompleteUsage";
 import MultiCheckboxUsage from "./usages/Checkbox/MultiCheckboxUsage";
 import RadioGroupUsage from "./usages/Radio/RadioGroupUsage";
@@ -24,7 +30,8 @@ export type Item = {
 
 export default function Home() {
   // Framer motion controls
-  const controls = useDragControls();
+  const dragControls = useDragControls();
+  // const controls = useAnimation();
 
   // Ref
   const constraintsRef = useRef(null);
@@ -32,30 +39,48 @@ export default function Home() {
   // State
   const [selectedCard, setSelectedCard] = useState<Item | undefined>();
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("1");
+  const [isCopied, setIsCopied] = useState(false);
 
   // Contents Usage
-  const contents = [
-    { id: "password_id", title: "Password", content: <PasswordUsage /> },
+  const contents = useMemo(
+    () => [
+      { id: "password_id", title: "Password", content: <PasswordUsage /> },
+      {
+        id: "radio_group_id",
+        title: "Radio Group",
+        content: <RadioGroupUsage />,
+      },
+      { id: "select+id", title: "Select", content: <SelectUsage /> },
+      {
+        id: "autocomplete_id",
+        title: "Autocomplete",
+        content: <AutocompleteUsage />,
+      },
+      {
+        id: "multi_checkbox_id",
+        title: "Multi Checkbox",
+        content: <MultiCheckboxUsage />,
+      },
+      {
+        id: "slider_id",
+        title: "Slider",
+        content: <SliderUsage />,
+      },
+    ],
+    []
+  );
+
+  const TabList = [
     {
-      id: "radio_group_id",
-      title: "Radio Group",
-      content: <RadioGroupUsage />,
+      id: "1",
+      title: "Password.tsx",
+      content: PasswordSyntax,
     },
-    { id: "select+id", title: "Select", content: <SelectUsage /> },
     {
-      id: "autocomplete_id",
-      title: "Autocomplete",
-      content: <AutocompleteUsage />,
-    },
-    {
-      id: "multi_checkbox_id",
-      title: "Multi Checkbox",
-      content: <MultiCheckboxUsage />,
-    },
-    {
-      id: "slider_id",
-      title: "Slider",
-      content: <SliderUsage />,
+      id: "2",
+      title: "PasswordUsage.tsx",
+      content: PasswordUsageSyntax,
     },
   ];
 
@@ -68,7 +93,7 @@ export default function Home() {
       contents.filter((content) =>
         content.title.toLowerCase().includes(debounce.toLowerCase())
       ),
-    [debounce]
+    [contents, debounce]
   );
 
   const handleNarrow = useCallback(() => {
@@ -93,9 +118,9 @@ export default function Home() {
   );
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full mt-36">
       {/* Introduction */}
-      <section className="p-24 w-full flex flex-col items-center relative z-10">
+      <section className="p-24 w-full flex flex-col items-center">
         <div className="w-full">
           <h1 className="text-8xl font-thin text-center pb-4">Form Control</h1>
           <p className="text-center pb-1 tracking-widest italic font-light">
@@ -132,13 +157,13 @@ export default function Home() {
       </section>
 
       {/* Cards Container */}
-      <section className="py-24 w-screen flex justify-center items-center z-10 relative">
+      <section className="py-24 w-screen flex justify-center items-center">
         <div className="w-full h-full cursor-grab" ref={constraintsRef}>
           <motion.div
             className="w-full min-w-fit"
             drag="x"
             dragConstraints={constraintsRef}
-            dragControls={controls}
+            dragControls={dragControls}
           >
             <motion.div
               id="form-container"
@@ -166,8 +191,9 @@ export default function Home() {
         {selectedCard?.id && (
           <motion.div
             layoutId={selectedCard.id}
-            className="fixed top-0 left-0 z-[1000] text-black flex bg-white w-screen h-screen outline-none"
+            className="fixed top-0 left-0 z-[9999] text-black flex bg-white w-screen h-screen outline-none overflow-hidden"
             onKeyDown={handleCardDetailsExit}
+            style={{ WebkitTransform: "translateZ(0)", transform: "unset" }}
             tabIndex={0}
           >
             <div className="w-full h-full flex justify-between items-center">
@@ -212,21 +238,84 @@ export default function Home() {
                     ease: "easeIn",
                   }}
                 >
+                  <div className="w-full flex items-center overflow-hidden bg-white/40 relative z-0">
+                    <button
+                      className="absolute top-1/2 right-0 -translate-y-1/2 p-4 px-3 bg-white/30 hover:bg-white/60"
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          TabList.filter((item) => item.id === activeTab)[0]
+                            .content
+                        );
+                        setIsCopied(true);
+                      }}
+                      onMouseLeave={() => {
+                        setTimeout(() => {
+                          setIsCopied(false);
+                        }, 500);
+                      }}
+                    >
+                      {isCopied ? (
+                        <IoCheckmark className="text-xl" color="" />
+                      ) : (
+                        <IoCopyOutline className="text-xl" color="" />
+                      )}
+                    </button>
+                    {TabList.map((item) => {
+                      return (
+                        <div
+                          key={item.id}
+                          className={clsx(
+                            "cursor-pointer py-2 px-4",
+                            activeTab === item.id
+                              ? "bg-white/60 font-semibold relative text-[#111]"
+                              : "bg-white/30 font-semibold text-[#111]/40"
+                          )}
+                          onClick={() => setActiveTab(item.id)}
+                        >
+                          {item.title}
+                        </div>
+                      );
+                    })}
+                    {/* <div className="bg-white/60 py-2 px-4 rounded-tr-2xl relative z-10 font-semibold">
+                      Password.tsx
+                      <div className="absolute bottom-[0px] right-[0.3px] translate-x-full z-0">
+                        <svg
+                          width="1.5rem"
+                          height="1.5rem"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            opacity="0.6"
+                            d="M24 24C8 23 1 16 0 0V24H24Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="py-2 px-4 z-10 rounded-bl-2xl overflow-hidden relative opacity-50">
+                      PasswordUsage.tsx
+                    </div> */}
+                  </div>
+
                   <SyntaxHighlighter
+                    data-lenis-prevent
                     language="javascript"
                     style={docco}
                     customStyle={{
                       background: "#fff",
                       opacity: 0.8,
                       overflowY: "auto",
-                      height: "100%",
+                      height: "calc(100% - 2.5rem)",
                       padding: "0px 24px 16px 24px",
-                      borderRadius: "24px",
+                      // borderBottomLeftRadius: "24px",
+                      // borderBottomRightRadius: "24px",
                       msOverflowStyle: "none",
                       scrollbarWidth: "none",
                     }}
                   >
-                    {AutocompleteSyntax}
+                    {TabList.filter((item) => item.id === activeTab)[0].content}
                   </SyntaxHighlighter>
                 </motion.div>
               </motion.div>
@@ -247,22 +336,6 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Background Mask */}
-      <section className="fixed top-0 left-0 z-0 w-full h-screen opacity-35 mix-blend-multiply dark:bg-background bg-background">
-        <video
-          muted
-          autoPlay
-          loop
-          playsInline
-          className="h-full w-full object-cover mix-blend-multiply"
-        >
-          <source
-            src="https://www.usestate.org/assets/video/home-background.mp4"
-            type="video/mp4"
-          />
-        </video>
-      </section>
     </div>
   );
 }

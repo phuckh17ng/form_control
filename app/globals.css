@@ -58,18 +58,18 @@
 
 @layer base {
   :root {
-    --color-background: #dbdbdb;
-    --color-card: #fff;
-    --color-text: #111;
-    --color-border: #111;
-    --color-icon: rgba(255, 255, 255);
+    --color-background: 219 219 219;
+    --color-card: 255 255 255;
+    --color-text: 17 17 17;
+    --color-border: 17 17 17;
+    --color-icon: 255 255 255;
   }
 
   :root[class~="dark"] {
-    --color-background: #2c2c2c;
-    --color-card: #fff;
-    --color-text: #e2dad2;
-    --color-border: #e2dad2;
-    --color-icon: #111;
+    --color-background: 44 44 44;
+    --color-card: 255 255 255;
+    --color-text: 226 218 210;
+    --color-border: 226 218 210;
+    --color-icon: 17 17 17;
   }
 }

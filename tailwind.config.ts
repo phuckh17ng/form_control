@@ -10,11 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "var(--color-text)",
-        background: "var(--color-background)",
-        icon: "var(--color-icon)",
-        border: "var(--color-border)",
-        card: "var(--color-card)",
+        primary: "rgb(var(--color-text) / <alpha-value>)",
+        background: "rgb(var(--color-background) / <alpha-value>)",
+        icon: "rgb(var(--color-icon) / <alpha-value>)",
+        border: "rgb(var(--color-border) / <alpha-value>)",
+        card: "rgb(var(--color-card) / <alpha-value>)",
       },
     },
     fontFamily: {

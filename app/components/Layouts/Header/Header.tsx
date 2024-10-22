@@ -6,7 +6,7 @@ import { useCallback, useState } from "react";
 import { IoMenu, IoMoon, IoSunny } from "react-icons/io5";
 import Text3d from "../../Text3d";
 
-type Props = { serverTheme?: string; serverMode?: string };
+type Props = { serverTheme?: string; serverMode?: string; isEnter?: boolean };
 
 // const menuVariants = {
 //   initial: { height: 28 },
@@ -17,7 +17,7 @@ type Props = { serverTheme?: string; serverMode?: string };
 // };
 
 const Header = (props: Props) => {
-  const { serverTheme } = props;
+  const { serverTheme, isEnter } = props;
   // const [isSliderMode, setSliderMode] = useState<boolean>(true);
   const [theme, setTheme] = useState<string | undefined>(serverTheme);
   const [current, cycle] = useCycle(
@@ -62,9 +62,40 @@ const Header = (props: Props) => {
   //   setSliderMode(!isSliderMode);
   // }, [isSliderMode]);
 
+  const motionVariants = {
+    initialIcon: {
+      opacity: 0,
+    },
+    logo: {
+      opacity: 1,
+      transition: { duration: 0.75, ease: "linear", delay: 2 },
+    },
+    about: {
+      opacity: 1,
+      transition: { duration: 0.75, ease: "linear", delay: 0.9 },
+    },
+    projects: {
+      opacity: 1,
+      transition: { duration: 0.75, ease: "linear", delay: 1.1 },
+    },
+    theme: {
+      opacity: 1,
+      transition: { duration: 0.75, ease: "linear", delay: 1.3 },
+    },
+    menu: {
+      opacity: 1,
+      transition: { duration: 0.75, ease: "linear", delay: 1.5 },
+    },
+  };
   return (
-    <header className="sticky top-0 left-0 flex justify-between items-center py-8 px-16 z-[100] backdrop-blur-sm">
-      <h1 className="font-pacifico text-[20px]">phuckh17ng</h1>
+    <header className="fixed top-0 left-0 flex justify-between items-center py-8 px-16 z-[100] backdrop-blur-sm w-full select-none">
+      <motion.h1
+        animate={isEnter ? "logo" : "initialIcon"}
+        variants={motionVariants}
+        className="font-pacifico text-[20px]"
+      >
+        phuckh17ng
+      </motion.h1>
       <div className="flex items-center justify-between gap-6 h-[36px]">
         {/* <div
           className="rounded-full flex items-center bg-primary"
@@ -100,8 +131,19 @@ const Header = (props: Props) => {
             <IoSearch className="text-[16px] text-icon" />
           </button>
         </div> */}
-        <Text3d primary="About" />
-        <Text3d primary="Projects" />
+        <motion.div
+          animate={isEnter ? "about" : "initialIcon"}
+          variants={motionVariants}
+        >
+          <Text3d primary="About" />
+        </motion.div>
+        <motion.div
+          animate={isEnter ? "projects" : "initialIcon"}
+          variants={motionVariants}
+        >
+          <Text3d primary="Projects" />
+        </motion.div>
+
         {/* <button
           onClick={() => {
             console.log("click");
@@ -113,7 +155,9 @@ const Header = (props: Props) => {
         <motion.div
           className="flex p-[4px] border border-border rounded-full w-[54px] cursor-pointer relative"
           onClick={toggleTheme}
-          onTapStart={() => cycle()}
+          onMouseUp={() => cycle()}
+          animate={isEnter ? "theme" : "initialIcon"}
+          variants={motionVariants}
         >
           {theme === "light" && (
             <IoMoon className="text-[16px] absolute right-2 opacity-50 rotate-[250deg]" />
@@ -140,14 +184,16 @@ const Header = (props: Props) => {
           )}
         </button> */}
 
-        <button
+        <motion.button
+          animate={isEnter ? "menu" : "initialIcon"}
+          variants={motionVariants}
           onClick={() => {
             console.log("click");
           }}
           className="rounded-full flex justify-center items-center p-[6px] bg-primary"
         >
           <IoMenu className="text-[16px] text-icon" />
-        </button>
+        </motion.button>
         {/* <motion.div
             className="absolute top-0 left-0 w-full rounded-t-full rounded-b-full bg-icon overflow-hidden"
             variants={menuVariants}
