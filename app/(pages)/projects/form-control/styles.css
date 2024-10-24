@@ -1,0 +1,15 @@
+.grid_mode {
+  @apply grid grid-cols-3;
+}
+
+.slider_mode {
+  @apply flex;
+}
+
+.grid_mode > div {
+  @apply relative bg-card w-full h-full aspect-square;
+}
+
+.slider_mode > div {
+  @apply relative bg-card w-[40rem] h-[40rem];
+}

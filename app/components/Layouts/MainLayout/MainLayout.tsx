@@ -3,6 +3,8 @@ import clsx from "clsx";
 import { ReactNode, useState } from "react";
 import Header from "../Header";
 import HeroLoading from "../HeroLoading";
+import { PreventClickMask } from "../Loading/Loading";
+import { useCommonStore } from "@/app/stores/commonStore";
 
 type Props = {
   children: ReactNode;
@@ -13,15 +15,18 @@ type Props = {
 const MainLayout = (props: Props) => {
   const { children, theme, mode } = props;
   const [isEnter, setIsEnter] = useState(false);
-
+  const { isLoading } = useCommonStore();
   return (
     <>
       <HeroLoading setIsEnter={setIsEnter} />
+      {isLoading && <PreventClickMask />}
       <Header isEnter={isEnter} serverTheme={theme} serverMode={mode} />
       <section
         className={clsx(
-          "opacity-0 blur-lg duration-[1200ms] ease-in-out transition-[opacity,filter]",
-          isEnter && "opacity-100 blur-none"
+          "duration-[1200ms] ease-in-out transition-[opacity,filter]",
+          isEnter
+            ? "opacity-100 blur-none overflow-auto h-full"
+            : "opacity-0 blur-lg overflow-hidden h-screen"
         )}
       >
         {children}

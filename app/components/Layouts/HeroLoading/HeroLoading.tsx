@@ -1,75 +1,88 @@
 "use client";
 
+import {
+  CommonActions,
+  CommonState,
+  CommonStore,
+  useCommonStore,
+} from "@/app/stores/commonStore";
 import clsx from "clsx";
 import { cubicBezier, motion, useAnimation } from "framer-motion";
 import { useState } from "react";
+
 type Props = {
   setIsEnter: (a: boolean) => void;
 };
 
+const motionVariants = {
+  buttonInitial: { width: "fit-content" },
+  button: {
+    width: "100%",
+    color: "rgb(var(--color-text) / 0%)",
+    transition: {
+      color: {
+        delay: 0.7,
+        ease: "linear",
+      },
+      width: {
+        ease: cubicBezier(1, 0.02, 0.31, 1),
+        duration: 1.5,
+      },
+    },
+  },
+  div1Initial: {
+    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+  },
+  div1: {
+    clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
+    transition: {
+      color: { delay: 0.5 },
+      clipPath: {
+        delay: 1.7,
+        ease: cubicBezier(1, 0.02, 0.31, 1),
+        duration: 1.5,
+      },
+    },
+  },
+  div2Initial: {
+    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+  },
+  div2: {
+    clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)",
+    transition: {
+      color: { delay: 0.5 },
+      clipPath: {
+        delay: 1.7,
+        ease: cubicBezier(1, 0.02, 0.31, 1),
+        duration: 1.5,
+      },
+    },
+  },
+  textInitial: {
+    opacity: 1,
+  },
+  text: {
+    opacity: 0,
+    transition: {
+      delay: 0.7,
+      ease: "linear",
+    },
+  },
+};
+
 const HeroLoading = (props: Props) => {
   const { setIsEnter } = props;
+  const [isSoundOn, setSoundOn] = useState(true);
+  const [isEnterClicked, setEnterClicked] = useState(false);
+
+  const { setLoading } = useCommonStore();
+
   const loadingControls = useAnimation();
   const buttonControls = useAnimation();
   const div1Controls = useAnimation();
   const div2Controls = useAnimation();
   const textControls = useAnimation();
-  const [isSoundOn, setSoundOn] = useState(true);
-  const motionVariants = {
-    buttonInitial: { width: "fit-content" },
-    button: {
-      width: "100%",
-      color: "rgb(var(--color-text)/0)!important",
-      transition: {
-        color: {
-          delay: 0.7,
-          ease: "linear",
-        },
-        width: {
-          ease: cubicBezier(1, 0.02, 0.31, 1),
-          duration: 1.5,
-        },
-      },
-    },
-    div1Initial: {
-      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-    },
-    div1: {
-      clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-      transition: {
-        color: { delay: 0.5 },
-        clipPath: {
-          delay: 1.7,
-          ease: cubicBezier(1, 0.02, 0.31, 1),
-          duration: 1.5,
-        },
-      },
-    },
-    div2Initial: {
-      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-    },
-    div2: {
-      clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)",
-      transition: {
-        color: { delay: 0.5 },
-        clipPath: {
-          delay: 1.7,
-          ease: cubicBezier(1, 0.02, 0.31, 1),
-          duration: 1.5,
-        },
-      },
-    },
-    textInitial: {
-      opacity: 1,
-    },
-    text: {
-      opacity: 0,
-      transition: {
-        delay: 0.7,
-        ease: "linear",
-      },
-    },
-  };
+
   return (
     <motion.div
       animate={loadingControls}
@@ -87,12 +100,16 @@ const HeroLoading = (props: Props) => {
           initial="buttonInitial"
           animate={buttonControls}
           onClick={() => {
+            if (isEnterClicked) return;
+            setEnterClicked(true);
+            setLoading();
             buttonControls.start("button");
             div1Controls.start("div1");
             div2Controls.start("div2");
             textControls.start("text");
             setTimeout(() => {
               setIsEnter(true);
+              setLoading();
               loadingControls.start({
                 display: "none",
                 transition: { delay: 0.4 },
@@ -123,6 +140,7 @@ const HeroLoading = (props: Props) => {
                 : "cursor-pointer hover:text-primary/40 transition-colors"
             )}
             onClick={() => {
+              if (isEnterClicked) return;
               setSoundOn(true);
             }}
           >
@@ -135,7 +153,10 @@ const HeroLoading = (props: Props) => {
                 ? "cursor-pointer hover:text-primary/40 transition-colors"
                 : "text-primary/40 cursor-default"
             )}
-            onClick={() => setSoundOn(false)}
+            onClick={() => {
+              if (isEnterClicked) return;
+              setSoundOn(false);
+            }}
           >
             Off
           </span>

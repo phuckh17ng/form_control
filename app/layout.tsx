@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import MainLayout from "./components/Layouts/MainLayout";
 import SmoothScrolling from "./components/Scrolling/SmoothScrolling";
 import "./globals.css";
+import ReactQueryProvider from "./providers/ReactQueryProvider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -26,11 +27,14 @@ export default function RootLayout({
       style={{ fontFamily: plusJakartaSans.style.fontFamily }}
     >
       <body className="bg-background text-primary transition-all duration-500">
-        <SmoothScrolling>
-          <MainLayout theme={theme} mode={mode}>
-            {children}
-          </MainLayout>
-        </SmoothScrolling>
+        <ReactQueryProvider>
+          <SmoothScrolling>
+            <MainLayout theme={theme} mode={mode}>
+              {children}
+            </MainLayout>
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          </SmoothScrolling>
+        </ReactQueryProvider>
       </body>
     </html>
   );

@@ -24,7 +24,7 @@ function sleep(duration: number): Promise<void> {
 const Autocomplete = (props: Props<ItemValue>) => {
   const { name, data, autoCompleteProps } = props;
   const [, , helper] = useField(name);
-  const [item, setItem] = useState<ItemValue>();
+  const [item, setItem] = useState<ItemValue | null>();
   const [options, setOptions] = useState<readonly ItemValue[]>([]);
 
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ const Autocomplete = (props: Props<ItemValue>) => {
    * handleOnChange
    */
   const handleOnChange = useCallback(
-    (event: never, newVal: ItemValue) => {
+    (event: React.SyntheticEvent, newVal: ItemValue | null) => {
       setItem(newVal);
       console.log("newVal.value", newVal);
       helper.setValue(newVal?.label);
@@ -69,7 +69,7 @@ const Autocomplete = (props: Props<ItemValue>) => {
         open={open}
         onOpen={handleOpen}
         onClose={handleClose}
-        onChange={handleOnChange as never}
+        onChange={handleOnChange}
         value={item || null}
         options={options}
         isOptionEqualToValue={(option, value) => option.label === value.label}

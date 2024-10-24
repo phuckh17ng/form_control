@@ -15,9 +15,9 @@
   --color-text: #111;
   --color-border: #111;
   --color-icon: #fff;
-} */
+}
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --color-background: #2d2f47;
     --color-card: #fff;

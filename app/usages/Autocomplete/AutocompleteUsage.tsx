@@ -17,6 +17,7 @@ const AutocompleteUsage = () => {
     initialValues: { auto_complete: undefined },
     onSubmit: handleSubmit,
   });
+
   return (
     <FormikProvider value={formikBag}>
       <Autocomplete data={top100Films} name="auto_complete" />

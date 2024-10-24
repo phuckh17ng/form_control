@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 /**
  * Custom hook for get changing value after delay.
- * @param value never
+ * @param value string
  * @param delay number
  * @return delayed value.
  */
