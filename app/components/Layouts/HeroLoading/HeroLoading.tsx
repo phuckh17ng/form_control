@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  CommonActions,
-  CommonState,
-  CommonStore,
-  useCommonStore,
-} from "@/app/stores/commonStore";
+import { useCommonStore } from "@/app/stores/commonStore";
 import clsx from "clsx";
 import { cubicBezier, motion, useAnimation } from "framer-motion";
 import { useState } from "react";
