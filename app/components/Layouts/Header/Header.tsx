@@ -1,14 +1,13 @@
 "use client";
 
+import useNavigate from "@/app/hooks/useNavigate";
+import { ABOUT_ROUTE, FORM_CONTROL_ROUTE, HOME_ROUTE } from "@/app/routers";
+import { useCommonStore } from "@/app/stores/commonStore";
 import { motion, useCycle } from "framer-motion";
 import Cookies from "js-cookie";
 import { useCallback, useState } from "react";
 import { IoMenu, IoMoon, IoSunny } from "react-icons/io5";
 import Text3d from "../../Text3d";
-import { ABOUT_ROUTE, FORM_CONTROL_ROUTE, HOME_ROUTE } from "@/app/routers";
-import { useCommonStore } from "@/app/stores/commonStore";
-import { useRouter } from "next/navigation";
-import useNavigate from "@/app/hooks/useNavigate";
 
 type Props = { serverTheme?: string; serverMode?: string; isEnter?: boolean };
 
@@ -46,7 +45,7 @@ const themeVariants = {
 const Header = (props: Props) => {
   const { serverTheme, isEnter } = props;
   // const router = useRouter();
-  const { setNavigateLoading, navigateLoading } = useCommonStore();
+  const { navigateLoading } = useCommonStore();
   const [theme, setTheme] = useState<string | undefined>(serverTheme);
   const [current, cycle] = useCycle(
     serverTheme === "light",
