@@ -26,7 +26,7 @@ const motionVariants = {
     },
   },
   div1Initial: {
-    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+    clipPath: "polygon(0 0, 100.5% 0, 100.5% 100.5%, 0% 100.5%)",
   },
   div1: {
     clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
@@ -70,7 +70,7 @@ const HeroLoading = (props: Props) => {
   const [isSoundOn, setSoundOn] = useState(true);
   const [isEnterClicked, setEnterClicked] = useState(false);
 
-  const { setLoading } = useCommonStore();
+  const { setLoading, setFristVisit } = useCommonStore();
 
   const loadingControls = useAnimation();
   const buttonControls = useAnimation();
@@ -110,6 +110,9 @@ const HeroLoading = (props: Props) => {
                 transition: { delay: 0.4 },
               });
             }, 2800);
+            setTimeout(() => {
+              setFristVisit(false);
+            }, 3200);
           }}
         >
           Enter

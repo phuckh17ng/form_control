@@ -221,7 +221,14 @@ export default function FormControl() {
                   }}
                   className="absolute w-full h-full overflow-hidden top-0 left-0 blur-2xl"
                 >
-                  <video muted autoPlay loop playsInline width="100%">
+                  <video
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                    preload="auto"
+                    width="100%"
+                  >
                     <source
                       src="https://accdistribution.eu/wp-content/uploads/2022/09/ACC_graphic_animation_hero.mp4"
                       type="video/mp4"

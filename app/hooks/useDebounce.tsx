@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
  * @param delay number
  * @return delayed value.
  */
-const useDebounce = (value: string, delay: number) => {
+export default function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
@@ -20,6 +20,4 @@ const useDebounce = (value: string, delay: number) => {
   }, [value, delay]);
 
   return debouncedValue;
-};
-
-export default useDebounce;
+}

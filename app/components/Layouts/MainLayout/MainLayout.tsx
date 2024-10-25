@@ -1,10 +1,10 @@
 "use client";
-import clsx from "clsx";
-import { ReactNode, useState } from "react";
+import { useCommonStore } from "@/app/stores/commonStore";
+import { motion, useAnimation } from "framer-motion";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import Header from "../Header";
 import HeroLoading from "../HeroLoading";
-import { PreventClickMask } from "../Loading/Loading";
-import { useCommonStore } from "@/app/stores/commonStore";
+import { NavigateLoading, PreventClickMask } from "../Loading/Loading";
 
 type Props = {
   children: ReactNode;
@@ -14,23 +14,72 @@ type Props = {
 
 const MainLayout = (props: Props) => {
   const { children, theme, mode } = props;
+  const controls = useAnimation();
   const [isEnter, setIsEnter] = useState(false);
-  const { isLoading } = useCommonStore();
+  const { isLoading, isFirstVisit, navigateLoading } = useCommonStore();
+
+  const motionVariants = useMemo(
+    () => ({
+      close: {
+        opacity: 0,
+        filter: "blur(16px)",
+        height: "100vh",
+        overflow: "hidden",
+        transition: {
+          duration: 1.2,
+          ease: "easeInOut",
+          delay: navigateLoading.animate === "opening" ? 1.2 : 0,
+        },
+      },
+      open: {
+        opacity: 1,
+        filter: "blur(0)",
+        height: "100%",
+        transition: {
+          duration: 1.2,
+          ease: "easeInOut",
+          delay: navigateLoading.animate === "opening" ? 1.2 : 0,
+        },
+      },
+    }),
+    [navigateLoading.animate]
+  );
+
+  useEffect(() => {
+    if (isEnter) {
+      controls.start("open");
+    }
+    if (navigateLoading.animate === "opening") {
+      controls.start("open");
+    }
+    if (navigateLoading.animate === "closing") {
+      controls.start("close");
+    }
+  }, [controls, isEnter, navigateLoading.animate]);
+
   return (
     <>
-      <HeroLoading setIsEnter={setIsEnter} />
+      {/* Frist Visit Loading Screen*/}
+      {isFirstVisit && <HeroLoading setIsEnter={setIsEnter} />}
+
+      {/* Navigate Loading Screen*/}
+      {!isFirstVisit && navigateLoading.isNavigating && <NavigateLoading />}
+
+      {/* Loading Mask */}
       {isLoading && <PreventClickMask />}
+
+      {/* Header */}
       <Header isEnter={isEnter} serverTheme={theme} serverMode={mode} />
-      <section
-        className={clsx(
-          "duration-[1200ms] ease-in-out transition-[opacity,filter]",
-          isEnter
-            ? "opacity-100 blur-none overflow-auto h-full"
-            : "opacity-0 blur-lg overflow-hidden h-screen"
-        )}
+
+      {/* Children */}
+      <motion.section
+        variants={motionVariants}
+        initial="close"
+        animate={controls}
       >
         {children}
-      </section>
+      </motion.section>
+
       {/* Background Mask */}
       <section className="fixed top-0 left-0 z-[-1] w-full h-screen opacity-35 mix-blend-multiply dark:bg-background bg-background">
         <video

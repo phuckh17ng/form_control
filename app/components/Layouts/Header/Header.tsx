@@ -5,8 +5,10 @@ import Cookies from "js-cookie";
 import { useCallback, useState } from "react";
 import { IoMenu, IoMoon, IoSunny } from "react-icons/io5";
 import Text3d from "../../Text3d";
-import { useRouter } from "next/navigation";
 import { ABOUT_ROUTE, FORM_CONTROL_ROUTE, HOME_ROUTE } from "@/app/routers";
+import { useCommonStore } from "@/app/stores/commonStore";
+import { useRouter } from "next/navigation";
+import useNavigate from "@/app/hooks/useNavigate";
 
 type Props = { serverTheme?: string; serverMode?: string; isEnter?: boolean };
 
@@ -36,28 +38,20 @@ const motionVariants = {
   },
 };
 
-// const menuVariants = {
-//   initial: { height: 28 },
-//   open: {
-//     height: "auto",
-//   },
-//   closed: { height: 28 },
-// };
+const themeVariants = {
+  light: { x: 0 },
+  dark: { x: 28 },
+};
 
 const Header = (props: Props) => {
   const { serverTheme, isEnter } = props;
-  const router = useRouter();
-  // const [isSliderMode, setSliderMode] = useState<boolean>(true);
+  // const router = useRouter();
+  const { setNavigateLoading, navigateLoading } = useCommonStore();
   const [theme, setTheme] = useState<string | undefined>(serverTheme);
   const [current, cycle] = useCycle(
     serverTheme === "light",
     serverTheme !== "light"
   );
-  // const [isSearchActive, setIsSearchActive] = useState(false);
-  const modeVariants = {
-    light: { x: 0 },
-    dark: { x: 28 },
-  };
 
   const toggleTheme = useCallback(() => {
     if (document.documentElement.classList.contains("dark")) {
@@ -90,86 +84,74 @@ const Header = (props: Props) => {
   //   }
   //   setSliderMode(!isSliderMode);
   // }, [isSliderMode]);
+  const navigate = useNavigate();
+  const handleNavigate = useCallback(() => {
+    // setNavigateLoading(true, "closing");
+
+    // const timeout1 = setTimeout(() => {
+    //   navigate(HOME_ROUTE);
+    //   setNavigateLoading(true, "opening");
+    // }, 3000);
+
+    // const timeout2 = setTimeout(() => {
+    //   setNavigateLoading(false);
+    // }, 7000);
+
+    // return () => {
+    //   clearTimeout(timeout1);
+    //   clearTimeout(timeout2);
+    // };
+    navigate(HOME_ROUTE);
+  }, [navigate]);
 
   return (
     <header className="fixed top-0 left-0 flex justify-between items-center py-8 px-16 z-[100] backdrop-blur-sm w-full select-none">
       <motion.h1
-        animate={isEnter ? "logo" : "initialIcon"}
+        animate={
+          isEnter || navigateLoading.animate === "opening"
+            ? "logo"
+            : "initialIcon"
+        }
         variants={motionVariants}
         className="font-pacifico text-[20px] cursor-pointer"
-        onClick={() => {
-          router.push(HOME_ROUTE);
-        }}
+        onClick={handleNavigate}
       >
         phuckh17ng
       </motion.h1>
       <div className="flex items-center justify-between gap-6 h-[36px]">
-        {/* <div
-          className="rounded-full flex items-center bg-primary"
-          onMouseEnter={() => {
-            setIsSearchActive(true);
-          }}
-          onMouseLeave={() => {
-            setIsSearchActive(false);
-          }}
-        >
-          <motion.div
-            className="bg-transparent outline-none text-icon overflow-hidden flex justify-center w-0"
-            variants={searchVariants}
-            initial="initial"
-            exit="closed"
-            animate={isSearchActive ? "open" : "closed"}
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <input
-              type="text"
-              name="search"
-              autoComplete="off"
-              className="bg-transparent outline-none text-icon pl-6 overflow-hidden flex justify-center"
-            />
-          </motion.div>
-
-          <button
-            onClick={() => {
-              console.log("click");
-            }}
-            className="bg-primary p-[6px] rounded-full flex justify-center items-center"
-          >
-            <IoSearch className="text-[16px] text-icon" />
-          </button>
-        </div> */}
         <motion.div
-          animate={isEnter ? "about" : "initialIcon"}
+          animate={
+            isEnter || navigateLoading.animate === "opening"
+              ? "about"
+              : "initialIcon"
+          }
           variants={motionVariants}
-          onClick={() => {
-            router.push(ABOUT_ROUTE);
-          }}
+          onClick={() => navigate(ABOUT_ROUTE)}
         >
           <Text3d primary="About" />
         </motion.div>
         <motion.div
-          animate={isEnter ? "projects" : "initialIcon"}
+          animate={
+            isEnter || navigateLoading.animate === "opening"
+              ? "projects"
+              : "initialIcon"
+          }
           variants={motionVariants}
           onClick={() => {
-            router.push(FORM_CONTROL_ROUTE);
+            navigate(FORM_CONTROL_ROUTE);
           }}
         >
           <Text3d primary="Projects" />
         </motion.div>
-
-        {/* <button
-          onClick={() => {
-            console.log("click");
-          }}
-          className="bg-primary p-[6px] rounded-full flex justify-center items-center"
-        >
-          <IoMusicalNote className="text-[16px] text-icon" />
-        </button> */}
         <motion.div
           className="flex p-[4px] border border-border rounded-full w-[54px] cursor-pointer relative"
           onClick={toggleTheme}
           onMouseUp={() => cycle()}
-          animate={isEnter ? "theme" : "initialIcon"}
+          animate={
+            isEnter || navigateLoading.animate === "opening"
+              ? "theme"
+              : "initialIcon"
+          }
           variants={motionVariants}
         >
           {theme === "light" && (
@@ -179,26 +161,18 @@ const Header = (props: Props) => {
             className="w-[16px] h-[16px] rounded-full bg-primary"
             initial={serverTheme}
             animate={current ? "light" : "dark"}
-            variants={modeVariants}
+            variants={themeVariants}
           />
           {theme === "dark" && (
             <IoSunny className="text-[16px] absolute left-2 opacity-50" />
           )}
         </motion.div>
-
-        {/* <button
-          onClick={toggleTheme}
-          className="rounded-full flex justify-center items-center p-[6px] bg-primary"
-        >
-          {theme === "light" ? (
-            <IoMoon className="text-[16px] text-icon" />
-          ) : (
-            <IoSunny className="text-[16px] text-icon" />
-          )}
-        </button> */}
-
         <motion.button
-          animate={isEnter ? "menu" : "initialIcon"}
+          animate={
+            isEnter || navigateLoading.animate === "opening"
+              ? "menu"
+              : "initialIcon"
+          }
           variants={motionVariants}
           onClick={() => {
             console.log("click");
@@ -207,20 +181,6 @@ const Header = (props: Props) => {
         >
           <IoMenu className="text-[16px] text-icon" />
         </motion.button>
-        {/* <motion.div
-            className="absolute top-0 left-0 w-full rounded-t-full rounded-b-full bg-icon overflow-hidden"
-            variants={menuVariants}
-            initial="initial"
-            exit="closed"
-            animate={isSearchActive ? "open" : "closed"}
-            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <div className="grid items-center justify-center pt-[calc(28px+1rem)] pb-4 gap-8">
-              <IoPerson className="text-[16px] text-primary" />
-              <IoMusicalNotes className="text-[16px] text-primary" />
-              <IoPerson className="text-[16px] text-primary" />
-            </div>
-          </motion.div> */}
       </div>
     </header>
   );
