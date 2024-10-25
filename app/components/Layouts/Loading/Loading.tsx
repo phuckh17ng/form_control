@@ -25,7 +25,7 @@ const motionVariants = {
     },
   },
   div1OpenInitial: {
-    clipPath: "polygon(0 0, 100.5% 0, 100.5% 100.5%, 0% 100.5%)",
+    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
   },
   div1OpenAnimate: {
     clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
@@ -42,7 +42,8 @@ const motionVariants = {
     clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
   },
   div1CloseAnimate: {
-    clipPath: "polygon(0 0, 100.5% 0, 100.5% 100.5%, 0% 100.5%)",
+    transform: "translateZ(0)",
+    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
     transition: {
       color: { delay: 0.5 },
       clipPath: {
@@ -69,6 +70,7 @@ const motionVariants = {
     clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)",
   },
   div2CloseAnimate: {
+    transform: "translateZ(0)",
     clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
     transition: {
       color: { delay: 0.5 },

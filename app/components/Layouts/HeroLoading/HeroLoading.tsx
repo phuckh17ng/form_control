@@ -26,7 +26,8 @@ const motionVariants = {
     },
   },
   div1Initial: {
-    clipPath: "polygon(0 0, 100.5% 0, 100.5% 100.5%, 0% 100.5%)",
+    transform: "translateZ(0)",
+    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
   },
   div1: {
     clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
@@ -40,6 +41,7 @@ const motionVariants = {
     },
   },
   div2Initial: {
+    transform: "translateZ(0)",
     clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
   },
   div2: {

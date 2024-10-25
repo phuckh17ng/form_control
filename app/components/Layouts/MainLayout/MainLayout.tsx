@@ -14,9 +14,9 @@ type Props = {
 
 const MainLayout = (props: Props) => {
   const { children, theme, mode } = props;
+  const { isLoading, isFirstVisit, navigateLoading } = useCommonStore();
   const controls = useAnimation();
   const [isEnter, setIsEnter] = useState(false);
-  const { isLoading, isFirstVisit, navigateLoading } = useCommonStore();
 
   const motionVariants = useMemo(
     () => ({
@@ -25,6 +25,7 @@ const MainLayout = (props: Props) => {
         filter: "blur(16px)",
         height: "100vh",
         overflow: "hidden",
+        willChange: "unset",
         transition: {
           duration: 1.2,
           ease: "easeInOut",
@@ -33,8 +34,10 @@ const MainLayout = (props: Props) => {
       },
       open: {
         opacity: 1,
-        filter: "blur(0)",
+        filter: "none",
         height: "100%",
+        overflow: "hidden",
+        willChange: "unset",
         transition: {
           duration: 1.2,
           ease: "easeInOut",
@@ -76,6 +79,7 @@ const MainLayout = (props: Props) => {
         variants={motionVariants}
         initial="close"
         animate={controls}
+        className="!blur-none"
       >
         {children}
       </motion.section>
