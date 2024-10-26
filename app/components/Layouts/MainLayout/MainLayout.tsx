@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import Header from "../Header";
 import HeroLoading from "../HeroLoading";
 import { NavigateLoading, PreventClickMask } from "../Loading/Loading";
+import Footer from "../Footer";
 
 type Props = {
   children: ReactNode;
@@ -83,6 +84,9 @@ const MainLayout = (props: Props) => {
       >
         {children}
       </motion.section>
+
+      {/* Footer */}
+      <Footer />
 
       {/* Background Mask */}
       <section className="fixed top-0 left-0 z-[-1] w-full h-screen opacity-35 mix-blend-multiply dark:bg-background bg-background">

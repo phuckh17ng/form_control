@@ -106,7 +106,6 @@ const HeroLoading = (props: Props) => {
             textControls.start("text");
             setTimeout(() => {
               setIsEnter(true);
-              setLoading();
               loadingControls.start({
                 display: "none",
                 transition: { delay: 0.4 },
@@ -114,6 +113,7 @@ const HeroLoading = (props: Props) => {
             }, 2800);
             setTimeout(() => {
               setFristVisit(false);
+              setLoading();
             }, 3200);
           }}
         >
@@ -145,7 +145,7 @@ const HeroLoading = (props: Props) => {
             }}
           >
             On
-          </span>{" "}
+          </span>
           /
           <span
             className={clsx(

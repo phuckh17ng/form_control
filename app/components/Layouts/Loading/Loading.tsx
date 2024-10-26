@@ -147,7 +147,7 @@ export function NavigateLoading() {
               ? { delay: 1.2, duration: 1, ease: "linear" }
               : { duration: 0.2, ease: "linear" }
           }
-          className="text-nowrap font-pacifico text-center text-[20px] absolute w-full bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2"
+          className="text-nowrap font-pacifico text-center text-2xl absolute w-full bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 tracking-widest"
         >
           <TypingText />
         </motion.p>
@@ -178,7 +178,7 @@ export function NavigateLoading() {
               ? { delay: 1.2, duration: 1, ease: "linear" }
               : { duration: 0.2, ease: "linear" }
           }
-          className="text-nowrap font-pacifico text-center text-[20px] absolute top-0 -translate-y-1/2 w-full left-1/2 -translate-x-1/2"
+          className="text-nowrap font-pacifico text-center text-2xl absolute top-0 -translate-y-1/2 w-full left-1/2 -translate-x-1/2 tracking-widest"
         >
           <TypingText />
         </motion.p>
