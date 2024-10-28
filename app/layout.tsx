@@ -20,13 +20,14 @@ export default function RootLayout({
 }>) {
   const theme = cookies().get("theme")?.value || "light";
   const mode = cookies().get("mode")?.value || "slider";
+
   return (
     <html
       lang="en"
       className={theme}
       style={{ fontFamily: plusJakartaSans.style.fontFamily }}
     >
-      <body className="bg-background text-primary transition-all duration-500">
+      <body className="bg-background text-primary transition-[background-color,color] duration-200">
         <ReactQueryProvider>
           <SmoothScrolling>
             <MainLayout theme={theme} mode={mode}>

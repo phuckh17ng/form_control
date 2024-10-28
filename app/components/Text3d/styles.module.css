@@ -7,7 +7,10 @@
 }
 
 .textContainer p {
-  padding: 0.4rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
   font-weight: 700;
   margin: 0px;
   transition: transform var(--duration), opacity var(--duration);

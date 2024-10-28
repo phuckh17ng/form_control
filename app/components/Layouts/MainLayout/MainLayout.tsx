@@ -2,10 +2,10 @@
 import { useCommonStore } from "@/app/stores/commonStore";
 import { motion, useAnimation } from "framer-motion";
 import { ReactNode, useEffect, useMemo, useState } from "react";
+import Footer from "../Footer";
 import Header from "../Header";
 import HeroLoading from "../HeroLoading";
 import { NavigateLoading, PreventClickMask } from "../Loading/Loading";
-import Footer from "../Footer";
 
 type Props = {
   children: ReactNode;
@@ -61,7 +61,18 @@ const MainLayout = (props: Props) => {
     }
   }, [controls, isEnter, navigateLoading.animate]);
 
-  return (
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  return isSafari ? (
+    <div className="text-center w-full h-screen flex flex-col justify-center items-center px-8">
+      <p className="text-xl">
+        This website does not support Safari browser. Please use another browser
+        such as Chrome or Edge!
+      </p>
+      <p className="text-xl mt-8">Sincerely,</p>
+      <p className="text-xl text-primary/50">phuckh17ng</p>
+    </div>
+  ) : (
     <>
       {/* Frist Visit Loading Screen*/}
       {isFirstVisit && <HeroLoading setIsEnter={setIsEnter} />}

@@ -191,7 +191,7 @@ export default function FormControl() {
         {selectedCard?.id && (
           <motion.div
             layoutId={selectedCard.id}
-            className="fixed top-0 left-0 z-[9999] text-black flex bg-white w-screen h-screen outline-none overflow-hidden"
+            className="fixed top-0 left-0 z-[9999] text-black flex bg-white w-screen h-screen outline-none overflow-hidden isolate"
             onKeyDown={handleCardDetailsExit}
             style={{ WebkitTransform: "translateZ(0)", transform: "unset" }}
             tabIndex={0}
