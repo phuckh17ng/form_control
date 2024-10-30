@@ -6,7 +6,7 @@ import {
   Checkbox as MUICheckbox,
 } from "@mui/material";
 import { useField } from "formik";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 type Props = {
   name: string;
@@ -15,9 +15,16 @@ type Props = {
 } & CheckboxProps;
 
 const Checkbox = (props: Props) => {
+  // Props
   const { name, label, value, onChange, ...rest } = props;
+
+  // Formik
   const [, , helper] = useField(name);
 
+  /**
+   * handleOnChange Handle checkbox checked
+   * @param event: React.ChangeEvent<HTMLInputElement>
+   */
   const handleOnChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.checked) helper.setValue(value);
@@ -26,17 +33,20 @@ const Checkbox = (props: Props) => {
     [helper, value]
   );
 
-  return (
-    <FormControlLabel
-      label={<span className="text-black">{label}</span>}
-      control={
-        <MUICheckbox
-          {...rest}
-          name={name}
-          onChange={onChange || handleOnChange}
-        />
-      }
-    />
+  return useMemo(
+    () => (
+      <FormControlLabel
+        label={<span className="text-primary">{label}</span>}
+        control={
+          <MUICheckbox
+            {...rest}
+            name={name}
+            onChange={onChange || handleOnChange}
+          />
+        }
+      />
+    ),
+    [handleOnChange, label, name, onChange, rest]
   );
 };
 

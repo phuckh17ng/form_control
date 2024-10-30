@@ -6,37 +6,32 @@ import { useCallback } from "react";
 import { IoMdExpand } from "react-icons/io";
 
 type Props = {
-  id: string;
-  title: string;
-  children: JSX.Element;
+  selectedCard: Item;
   setSelectedCard: (item: Item) => void;
   className?: string;
 };
 
 const Card = (props: Props) => {
   const {
-    id,
-    title,
-    children,
+    selectedCard,
     setSelectedCard,
     className = "bg-card w-[40rem] h-[40rem] relative",
   } = props;
 
   const handleExpand = useCallback(() => {
-    console.log("id", id);
-    setSelectedCard({ id: id, title: title, content: children });
-  }, [children, id, setSelectedCard, title]);
+    setSelectedCard(selectedCard);
+  }, [selectedCard, setSelectedCard]);
 
   return (
-    <motion.div className={className} layoutId={id}>
-      <div className="text-[#111] flex justify-between items-start absolute top-0 left-0 w-full p-6">
-        <p className="text-3xl tracking-wide leading-4">{title}</p>
+    <motion.div className={className} layoutId={selectedCard.id}>
+      <div className="text-primary flex justify-between items-start absolute top-0 left-0 w-full p-6">
+        <p className="text-3xl tracking-wide leading-4">{selectedCard.title}</p>
         <button onClick={handleExpand}>
           <IoMdExpand className="text-[24px]" />
         </button>
       </div>
       <div className="w-full h-full flex justify-center items-center">
-        {children}
+        {selectedCard.content}
       </div>
     </motion.div>
   );

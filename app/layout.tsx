@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className="bg-background text-primary transition-[background-color,color] duration-200">
         <ReactQueryProvider>
           <SmoothScrolling>
-            <MainLayout theme={theme} mode={mode}>
+            <MainLayout serverTheme={theme as never} mode={mode}>
               {children}
             </MainLayout>
             {/* <ReactQueryDevtools initialIsOpen={false} /> */}

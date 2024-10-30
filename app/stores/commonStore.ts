@@ -1,6 +1,8 @@
+import { PaletteMode } from "@mui/material";
 import { create } from "zustand";
 
 export type CommonState = {
+  theme?: PaletteMode | undefined;
   isLoading: boolean;
   navigateLoading: {
     isNavigating: boolean;
@@ -11,6 +13,7 @@ export type CommonState = {
 
 export type CommonActions = {
   setLoading: (val?: boolean) => void;
+  setTheme: (val?: PaletteMode | undefined) => void;
   setNavigateLoading: (
     isNavigating: boolean,
     anmiate?: "opening" | "closing"
@@ -25,6 +28,7 @@ export const initCommonStore = (): CommonState => {
     isLoading: false,
     navigateLoading: { isNavigating: false },
     isFirstVisit: true,
+    theme: undefined,
   };
 };
 
@@ -32,10 +36,12 @@ export const defaultInitState: CommonState = {
   isLoading: false,
   navigateLoading: { isNavigating: false },
   isFirstVisit: true,
+  theme: undefined,
 };
 
 export const useCommonStore = create<CommonStore>((set) => ({
   ...defaultInitState,
+  setTheme: (val) => set((state) => ({ ...state, theme: val })),
   setLoading: (val?) =>
     set((state) => ({ ...state, isLoading: val || !state.isLoading })),
   setNavigateLoading: (isNavigating, animate) =>

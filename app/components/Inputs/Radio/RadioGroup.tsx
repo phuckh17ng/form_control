@@ -50,7 +50,9 @@ const RadioGroup = (props: Props) => {
   return useMemo(
     () => (
       <FormControl variant="standard">
-        <FormLabel id={id}>{title}</FormLabel>
+        <FormLabel id={id}>
+          <span className="text-primary">{title}</span>
+        </FormLabel>
         <MUIRadioGroup
           aria-labelledby={id}
           defaultValue={defaultValue}
@@ -61,7 +63,7 @@ const RadioGroup = (props: Props) => {
           {radioList.map((radioItem) => {
             return (
               <FormControlLabel
-                className="text-black"
+                className="text-primary"
                 key={radioItem.name}
                 label={radioItem.label}
                 value={radioItem.value}

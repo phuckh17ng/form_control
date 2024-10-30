@@ -3,13 +3,18 @@
 import useNavigate from "@/app/hooks/useNavigate";
 import { ABOUT_ROUTE, FORM_CONTROL_ROUTE, HOME_ROUTE } from "@/app/routers";
 import { useCommonStore } from "@/app/stores/commonStore";
-import { motion, useCycle } from "framer-motion";
+import { motion } from "framer-motion";
 import Cookies from "js-cookie";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { IoMenu, IoMoon, IoSunny } from "react-icons/io5";
 import Text3d from "../../Text3d";
+import { PaletteMode } from "@mui/material";
 
-type Props = { serverTheme?: string; serverMode?: string; isEnter?: boolean };
+type Props = {
+  serverTheme?: PaletteMode | undefined;
+  serverMode?: string;
+  isEnter?: boolean;
+};
 
 const motionVariants = {
   initialIcon: {
@@ -43,15 +48,18 @@ const themeVariants = {
 };
 
 const Header = (props: Props) => {
+  // Props
   const { serverTheme, isEnter } = props;
-  // const router = useRouter();
-  const { navigateLoading } = useCommonStore();
-  const [theme, setTheme] = useState<string | undefined>(serverTheme);
-  const [current, cycle] = useCycle(
-    serverTheme === "light",
-    serverTheme !== "light"
-  );
 
+  // Navigate
+  const navigate = useNavigate();
+
+  // Stores
+  const { navigateLoading, theme, setTheme } = useCommonStore();
+
+  /**
+   * Update UI theme
+   */
   const toggleTheme = useCallback(() => {
     if (document.documentElement.classList.contains("dark")) {
       document.documentElement.classList.remove("dark");
@@ -64,47 +72,15 @@ const Header = (props: Props) => {
       Cookies.set("theme", "dark");
       setTheme("dark");
     }
-  }, []);
+  }, [setTheme]);
 
-  // const handleMode = useCallback(() => {
-  //   const element = document.getElementById("form-container");
-
-  //   if (!element) return;
-  //   if (isSliderMode) {
-  //     element.classList.remove("slider_mode");
-  //     element.classList.add("grid_mode");
-  //     localStorage.setItem("mode", "grid");
-  //     Cookies.set("mode", "grid");
-  //   } else {
-  //     element.classList.remove("grid_mode");
-  //     element.classList.add("slider_mode");
-  //     localStorage.setItem("mode", "slider");
-  //     Cookies.set("mode", "slider");
-  //   }
-  //   setSliderMode(!isSliderMode);
-  // }, [isSliderMode]);
-  const navigate = useNavigate();
-  const handleNavigate = useCallback(() => {
-    // setNavigateLoading(true, "closing");
-
-    // const timeout1 = setTimeout(() => {
-    //   navigate(HOME_ROUTE);
-    //   setNavigateLoading(true, "opening");
-    // }, 3000);
-
-    // const timeout2 = setTimeout(() => {
-    //   setNavigateLoading(false);
-    // }, 7000);
-
-    // return () => {
-    //   clearTimeout(timeout1);
-    //   clearTimeout(timeout2);
-    // };
-    navigate(HOME_ROUTE);
-  }, [navigate]);
+  // Init theme
+  useEffect(() => {
+    setTheme(serverTheme);
+  }, [serverTheme, setTheme]);
 
   return (
-    <header className="fixed top-0 left-0 flex justify-between items-center py-8 px-16 z-[100] backdrop-blur-sm w-full select-none">
+    <header className="fixed top-0 left-0 flex justify-between items-center py-12 px-24 z-[100] w-full select-none">
       <motion.h1
         animate={
           isEnter || navigateLoading.animate === "opening"
@@ -113,7 +89,7 @@ const Header = (props: Props) => {
         }
         variants={motionVariants}
         className="font-pacifico text-[20px] cursor-pointer"
-        onClick={handleNavigate}
+        onClick={() => navigate(HOME_ROUTE)}
       >
         phuckh17ng
       </motion.h1>
@@ -145,7 +121,6 @@ const Header = (props: Props) => {
         <motion.div
           className="flex p-[4px] border border-border rounded-full w-[54px] cursor-pointer relative"
           onClick={toggleTheme}
-          onMouseUp={() => cycle()}
           animate={
             isEnter || navigateLoading.animate === "opening"
               ? "theme"
@@ -159,7 +134,7 @@ const Header = (props: Props) => {
           <motion.div
             className="w-[16px] h-[16px] rounded-full bg-primary"
             initial={serverTheme}
-            animate={current ? "light" : "dark"}
+            animate={theme || serverTheme}
             variants={themeVariants}
           />
           {theme === "dark" && (

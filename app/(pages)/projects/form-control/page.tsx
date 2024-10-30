@@ -1,37 +1,46 @@
 "use client";
 
-import clsx from "clsx";
-import { AnimatePresence, motion, useDragControls } from "framer-motion";
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
-import {
-  IoCheckmark,
-  IoCopyOutline,
-  IoRemove,
-  IoSearch,
-} from "react-icons/io5";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import "./styles.css";
-import PasswordUsage from "@/app/usages/TextField/PasswordUsage";
-import RadioGroupUsage from "@/app/usages/Radio/RadioGroupUsage";
-import SelectUsage from "@/app/usages/Select/SelectUsage";
+import Card from "@/app/components/Card";
+import useDebounce from "@/app/hooks/useDebounce";
+import { TextFieldSyntax, PasswordUsageSyntax } from "@/app/syntax/Password";
 import AutocompleteUsage from "@/app/usages/Autocomplete/AutocompleteUsage";
 import MultiCheckboxUsage from "@/app/usages/Checkbox/MultiCheckboxUsage";
+import RadioGroupUsage from "@/app/usages/Radio/RadioGroupUsage";
+import SelectUsage from "@/app/usages/Select/SelectUsage";
 import SliderUsage from "@/app/usages/Slider/SliderUsage";
-import { PasswordSyntax, PasswordUsageSyntax } from "@/app/syntax/Password";
-import useDebounce from "@/app/hooks/useDebounce";
-import Card from "@/app/components/Card";
+import PasswordUsage from "@/app/usages/TextField/PasswordUsage";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
+import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
+import { IoSearch } from "react-icons/io5";
+import CardExpand from "./components/CardExpand";
+import "./styles.css";
+import { RadioGroupSyntax, RadioUsageSyntax } from "@/app/syntax/Radio";
+import { SelectSyntax, SelectUsageSyntax } from "@/app/syntax/Select";
+import {
+  AutocompleteSyntax,
+  AutoCompleteUsageSyntax,
+  top100FilmsSyntax,
+} from "@/app/syntax/Autocomplete";
+import {
+  CheckboxSyntax,
+  MultiCheckboxUsageSyntax,
+} from "@/app/syntax/MultiCheckbox";
+import { SliderSyntax, SliderUsageSyntax } from "@/app/syntax/Slider";
 
 export type Item = {
   id: string;
   title: string;
   content: JSX.Element;
+  syntax: {
+    id: string;
+    title: string;
+    content: string;
+  }[];
 };
 
 export default function FormControl() {
   // Framer motion controls
   const dragControls = useDragControls();
-  // const controls = useAnimation();
 
   // Ref
   const constraintsRef = useRef(null);
@@ -39,50 +48,120 @@ export default function FormControl() {
   // State
   const [selectedCard, setSelectedCard] = useState<Item | undefined>();
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("1");
-  const [isCopied, setIsCopied] = useState(false);
 
   // Contents Usage
   const contents = useMemo(
     () => [
-      { id: "password_id", title: "Password", content: <PasswordUsage /> },
+      {
+        id: "password_id",
+        title: "Password",
+        content: <PasswordUsage />,
+        syntax: [
+          {
+            id: "1",
+            title: "TextField.tsx",
+            content: TextFieldSyntax,
+          },
+          {
+            id: "2",
+            title: "PasswordUsage.tsx",
+            content: PasswordUsageSyntax,
+          },
+        ],
+      },
       {
         id: "radio_group_id",
         title: "Radio Group",
         content: <RadioGroupUsage />,
+        syntax: [
+          {
+            id: "1",
+            title: "RadioGroup.tsx",
+            content: RadioGroupSyntax,
+          },
+          {
+            id: "2",
+            title: "RadioUsage.tsx",
+            content: RadioUsageSyntax,
+          },
+        ],
       },
-      { id: "select+id", title: "Select", content: <SelectUsage /> },
+      {
+        id: "select+id",
+        title: "Select",
+        content: <SelectUsage />,
+        syntax: [
+          {
+            id: "1",
+            title: "Select.tsx",
+            content: SelectSyntax,
+          },
+          {
+            id: "2",
+            title: "SelectUsage.tsx",
+            content: SelectUsageSyntax,
+          },
+        ],
+      },
       {
         id: "autocomplete_id",
         title: "Autocomplete",
         content: <AutocompleteUsage />,
+        syntax: [
+          {
+            id: "1",
+            title: "AutoComplete.tsx",
+            content: AutocompleteSyntax,
+          },
+          {
+            id: "2",
+            title: "AutoCompleteUsage.tsx",
+            content: AutoCompleteUsageSyntax,
+          },
+          {
+            id: "3",
+            title: "top100Films.ts",
+            content: top100FilmsSyntax,
+          },
+        ],
       },
       {
         id: "multi_checkbox_id",
         title: "Multi Checkbox",
         content: <MultiCheckboxUsage />,
+        syntax: [
+          {
+            id: "1",
+            title: "Checkbox.tsx",
+            content: CheckboxSyntax,
+          },
+          {
+            id: "2",
+            title: "MultiCheckboxUsage.tsx",
+            content: MultiCheckboxUsageSyntax,
+          },
+        ],
       },
       {
         id: "slider_id",
         title: "Slider",
         content: <SliderUsage />,
+        syntax: [
+          {
+            id: "1",
+            title: "Slider.tsx",
+            content: SliderSyntax,
+          },
+          {
+            id: "2",
+            title: "SliderUsage.tsx",
+            content: SliderUsageSyntax,
+          },
+        ],
       },
     ],
     []
   );
-
-  const TabList = [
-    {
-      id: "1",
-      title: "Password.tsx",
-      content: PasswordSyntax,
-    },
-    {
-      id: "2",
-      title: "PasswordUsage.tsx",
-      content: PasswordUsageSyntax,
-    },
-  ];
 
   // Hooks
   const debounce = useDebounce(searchTerm, 500);
@@ -96,23 +175,9 @@ export default function FormControl() {
     [contents, debounce]
   );
 
-  const handleNarrow = useCallback(() => {
-    setSelectedCard(undefined);
-  }, []);
-
   const handleSearchContent = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setSearchTerm(e.target.value);
-    },
-    []
-  );
-
-  const handleCardDetailsExit = useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
-      console.log("event.key", event.key);
-      if (event.key === "Escape") {
-        setSelectedCard(undefined);
-      }
     },
     []
   );
@@ -132,7 +197,7 @@ export default function FormControl() {
           </p>
         </div>
         <motion.div
-          className="mt-8 rounded-full h-full flex items-center gap-2 border border-transparent bg-white py-1 px-4"
+          className="mt-8 rounded-full h-full flex items-center gap-2 border border-transparent bg-background py-1 px-4 text-primary"
           onHoverStart={() => {}}
         >
           <button
@@ -141,12 +206,12 @@ export default function FormControl() {
             }}
             className="pl-2"
           >
-            <IoSearch color="#000" className="text-3xl opacity-70" />
+            <IoSearch className="text-3xl opacity-70" />
           </button>
           <input
             type="text"
             name="search"
-            className="bg-transparent w-[16rem] outline-none pl-4 text-black placeholder:text-xl placeholder:font-light placeholder:text-black/50 text-xl leading-[40px]"
+            className="bg-transparent w-[16rem] outline-none pl-4 text-primary placeholder:text-xl placeholder:font-light placeholder:text-primary/50 text-xl leading-[40px]"
             onFocus={() => console.log("focus")}
             onBlur={() => console.log("blur")}
             onChange={handleSearchContent}
@@ -167,18 +232,15 @@ export default function FormControl() {
           >
             <motion.div
               id="form-container"
-              className="w-full justify-center items-center gap-6 px-16 grid-cols-3 slider_mode transition-all"
+              className="w-full justify-center items-center gap-6 px-24 grid-cols-3 slider_mode transition-all"
             >
               {filteredContents.map((item, index) => {
                 return (
                   <Card
                     key={index}
-                    title={item.title}
-                    id={item.id}
+                    selectedCard={item}
                     setSelectedCard={setSelectedCard}
-                  >
-                    {item.content}
-                  </Card>
+                  />
                 );
               })}
             </motion.div>
@@ -189,158 +251,10 @@ export default function FormControl() {
       {/* Card Details Expand */}
       <AnimatePresence>
         {selectedCard?.id && (
-          <motion.div
-            layoutId={selectedCard.id}
-            className="fixed top-0 left-0 z-[9999] text-black flex bg-white w-screen h-screen outline-none overflow-hidden isolate"
-            onKeyDown={handleCardDetailsExit}
-            style={{ WebkitTransform: "translateZ(0)", transform: "unset" }}
-            tabIndex={0}
-          >
-            <div className="w-full h-full flex justify-between items-center">
-              <div className="flex justify-between items-start absolute top-0 right-0 w-1/2 z-10 p-6">
-                <motion.p
-                  className="text-3xl tracking-wide leading-4 text-start ml-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1 }}
-                >
-                  {selectedCard.title}
-                </motion.p>
-                <button onClick={handleNarrow} className="text-[24px]">
-                  <IoRemove className="text-[24px]" />
-                </button>
-              </div>
-              <motion.div className="w-1/2 h-full flex justify-center items-center relative p-12">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.5 }}
-                  transition={{
-                    delay: 0.75,
-                    duration: 3,
-                    ease: "easeIn",
-                  }}
-                  className="absolute w-full h-full overflow-hidden top-0 left-0 blur-2xl"
-                >
-                  <video
-                    muted
-                    autoPlay
-                    loop
-                    playsInline
-                    preload="auto"
-                    width="100%"
-                  >
-                    <source
-                      src="https://accdistribution.eu/wp-content/uploads/2022/09/ACC_graphic_animation_hero.mp4"
-                      type="video/mp4"
-                    />
-                  </video>
-                </motion.div>
-                <motion.div
-                  className="w-full h-full"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    delay: 0.65,
-                    duration: 0.5,
-                    ease: "easeIn",
-                  }}
-                >
-                  <div className="w-full flex items-center overflow-hidden bg-white/40 relative z-0">
-                    <button
-                      className="absolute top-1/2 right-0 -translate-y-1/2 p-4 px-3 bg-white/30 hover:bg-white/60"
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          TabList.filter((item) => item.id === activeTab)[0]
-                            .content
-                        );
-                        setIsCopied(true);
-                      }}
-                      onMouseLeave={() => {
-                        setTimeout(() => {
-                          setIsCopied(false);
-                        }, 500);
-                      }}
-                    >
-                      {isCopied ? (
-                        <IoCheckmark className="text-xl" color="" />
-                      ) : (
-                        <IoCopyOutline className="text-xl" color="" />
-                      )}
-                    </button>
-                    {TabList.map((item) => {
-                      return (
-                        <div
-                          key={item.id}
-                          className={clsx(
-                            "cursor-pointer py-2 px-4 select-none",
-                            activeTab === item.id
-                              ? "bg-white/60 font-semibold relative text-[#111]"
-                              : "bg-white/30 font-semibold text-[#111]/40"
-                          )}
-                          onClick={() => setActiveTab(item.id)}
-                        >
-                          {item.title}
-                        </div>
-                      );
-                    })}
-                    {/* <div className="bg-white/60 py-2 px-4 rounded-tr-2xl relative z-10 font-semibold">
-                      Password.tsx
-                      <div className="absolute bottom-[0px] right-[0.3px] translate-x-full z-0">
-                        <svg
-                          width="1.5rem"
-                          height="1.5rem"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            opacity="0.6"
-                            d="M24 24C8 23 1 16 0 0V24H24Z"
-                            fill="white"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="py-2 px-4 z-10 rounded-bl-2xl overflow-hidden relative opacity-50">
-                      PasswordUsage.tsx
-                    </div> */}
-                  </div>
-
-                  <SyntaxHighlighter
-                    data-lenis-prevent
-                    language="javascript"
-                    style={docco}
-                    customStyle={{
-                      background: "#fff",
-                      opacity: 0.8,
-                      overflowY: "auto",
-                      height: "calc(100% - 2.5rem)",
-                      padding: "0px 24px 16px 24px",
-                      // borderBottomLeftRadius: "24px",
-                      // borderBottomRightRadius: "24px",
-                      msOverflowStyle: "none",
-                      scrollbarWidth: "none",
-                    }}
-                  >
-                    {TabList.filter((item) => item.id === activeTab)[0].content}
-                  </SyntaxHighlighter>
-                </motion.div>
-              </motion.div>
-
-              <motion.div
-                className="w-1/2 bg-white h-full flex justify-center items-center relative"
-                initial={{ translateX: "-50%" }}
-                animate={{ translateX: "0%" }}
-                transition={{
-                  delay: 0.5,
-                  duration: 0.4,
-                  ease: "circInOut",
-                }}
-              >
-                {selectedCard.content}
-              </motion.div>
-            </div>
-          </motion.div>
+          <CardExpand
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
+          />
         )}
       </AnimatePresence>
     </div>

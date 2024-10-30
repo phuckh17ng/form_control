@@ -1,5 +1,5 @@
 import { FormikProvider, useFormik } from "formik";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import Autocomplete from "../../components/Inputs/Autocomplete";
 import top100Films from "../../database/top100Films";
 
@@ -18,11 +18,14 @@ const AutocompleteUsage = () => {
     onSubmit: handleSubmit,
   });
 
-  return (
-    <FormikProvider value={formikBag}>
-      <Autocomplete data={top100Films} name="auto_complete" />
-      {/* <Button onClick={() => formikBag.submitForm()}>Click</Button> */}
-    </FormikProvider>
+  return useMemo(
+    () => (
+      <FormikProvider value={formikBag}>
+        <Autocomplete data={top100Films} name="auto_complete" />
+        {/* <Button onClick={() => formikBag.submitForm()}>Click</Button> */}
+      </FormikProvider>
+    ),
+    [formikBag]
   );
 };
 

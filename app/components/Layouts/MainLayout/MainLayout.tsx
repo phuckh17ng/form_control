@@ -1,7 +1,9 @@
 "use client";
+
 import { useCommonStore } from "@/app/stores/commonStore";
+import { createTheme, PaletteMode, ThemeProvider } from "@mui/material";
 import { motion, useAnimation } from "framer-motion";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 import HeroLoading from "../HeroLoading";
@@ -9,15 +11,22 @@ import { NavigateLoading, PreventClickMask } from "../Loading/Loading";
 
 type Props = {
   children: ReactNode;
-  theme: string;
+  serverTheme: PaletteMode | undefined;
   mode: string;
 };
 
 const MainLayout = (props: Props) => {
-  const { children, theme, mode } = props;
-  const { isLoading, isFirstVisit, navigateLoading } = useCommonStore();
+  const { children, mode, serverTheme } = props;
+  const { isLoading, isFirstVisit, navigateLoading, theme } = useCommonStore();
   const controls = useAnimation();
+  const safari = useRef(false);
   const [isEnter, setIsEnter] = useState(false);
+
+  const MUITheme = createTheme({
+    palette: {
+      mode: theme || serverTheme,
+    },
+  });
 
   const motionVariants = useMemo(
     () => ({
@@ -61,9 +70,11 @@ const MainLayout = (props: Props) => {
     }
   }, [controls, isEnter, navigateLoading.animate]);
 
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  useEffect(() => {
+    safari.current = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  }, []);
 
-  return isSafari ? (
+  return safari.current ? (
     <div className="text-center w-full h-screen flex flex-col justify-center items-center px-8">
       <p className="text-xl">
         This website does not support Safari browser. Please use another browser
@@ -84,18 +95,19 @@ const MainLayout = (props: Props) => {
       {isLoading && <PreventClickMask />}
 
       {/* Header */}
-      <Header isEnter={isEnter} serverTheme={theme} serverMode={mode} />
+      <Header isEnter={isEnter} serverTheme={serverTheme} serverMode={mode} />
 
       {/* Children */}
-      <motion.section
-        variants={motionVariants}
-        initial="close"
-        animate={controls}
-        className="!blur-none"
-      >
-        {children}
-      </motion.section>
-
+      <ThemeProvider theme={MUITheme}>
+        <motion.div
+          variants={motionVariants}
+          initial="close"
+          animate={controls}
+          className="!blur-none"
+        >
+          {children}
+        </motion.div>
+      </ThemeProvider>
       {/* Footer */}
       <Footer />
 
