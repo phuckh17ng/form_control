@@ -22,7 +22,6 @@ import SelectUsage from "@/app/usages/Select/SelectUsage";
 import SliderUsage from "@/app/usages/Slider/SliderUsage";
 import PasswordUsage from "@/app/usages/TextField/PasswordUsage";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
-import dynamic from "next/dynamic";
 import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import CardExpand from "./components/CardExpand";
@@ -38,8 +37,6 @@ export type Item = {
     content: string;
   }[];
 };
-
-const BackdropVideo = dynamic(() => import("./components/BackdropVideo"));
 
 export default function FormControl() {
   // Framer motion controls

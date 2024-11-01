@@ -1,7 +1,7 @@
 "use client";
 
 import useNavigate from "@/app/hooks/useNavigate";
-import { ABOUT_ROUTE, FORM_CONTROL_ROUTE, HOME_ROUTE } from "@/app/routers";
+import { ABOUT_ROUTE, FORM_CONTROL_ROUTE } from "@/app/routers";
 import { useCommonStore } from "@/app/stores/commonStore";
 import { PaletteMode } from "@mui/material";
 import { motion } from "framer-motion";
@@ -90,7 +90,7 @@ const Header = (props: Props) => {
           }
           variants={motionVariants}
           className="font-pacifico text-[20px] cursor-pointer"
-          onClick={() => navigate(HOME_ROUTE)}
+          onClick={() => navigate(ABOUT_ROUTE)}
         >
           phuckh17ng
         </motion.h1>
