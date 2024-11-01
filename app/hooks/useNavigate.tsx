@@ -18,7 +18,7 @@ export default function useNavigate() {
       const timeoutId = setTimeout(() => {
         setNavigateLoading(false, "opening");
         setLoading();
-      }, 2000);
+      }, 2600);
 
       // Update REF
       savedPathNameRef.current = pathname;
@@ -30,14 +30,15 @@ export default function useNavigate() {
   }, [pathname, setLoading, setNavigateLoading]);
 
   const navigate = useCallback(
+    // Navigate to the given path with a delay before transitioning
     (path: string) => {
       if (pathname === path) return;
       setLoading();
       setNavigateLoading(true, "closing");
-
       const timeoutId = setTimeout(() => {
+        // Delay before closing the navigation loading state
         router.push(path);
-      }, 2000);
+      }, 1800);
 
       return () => {
         clearTimeout(timeoutId);

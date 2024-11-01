@@ -30,7 +30,6 @@ const motionVariants = {
   div1OpenAnimate: {
     clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
     transition: {
-      color: { delay: 0.5 },
       clipPath: {
         delay: 0.4,
         ease: cubicBezier(1, 0.02, 0.31, 1),
@@ -45,7 +44,6 @@ const motionVariants = {
     transform: "translateZ(0)",
     clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
     transition: {
-      color: { delay: 0.5 },
       clipPath: {
         ease: cubicBezier(1, 0.02, 0.31, 1),
         duration: 1,
@@ -58,7 +56,6 @@ const motionVariants = {
   div2OpenAnimate: {
     clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)",
     transition: {
-      color: { delay: 0.5 },
       clipPath: {
         delay: 0.4,
         ease: cubicBezier(1, 0.02, 0.31, 1),
@@ -73,7 +70,6 @@ const motionVariants = {
     transform: "translateZ(0)",
     clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
     transition: {
-      color: { delay: 0.5 },
       clipPath: {
         ease: cubicBezier(1, 0.02, 0.31, 1),
         duration: 1,
@@ -82,7 +78,40 @@ const motionVariants = {
   },
 };
 
-function TypingText() {
+// function TypingText() {
+//   const cheerTexts = useMemo(
+//     () => [
+//       "phuckh17ng",
+//       "Xin Chào!",
+//       "Hello!",
+//       "你好!",
+//       "Bonjour!",
+//       "こんにちは!",
+//       "안녕하세요!",
+//     ],
+//     []
+//   );
+
+//   const [currentTextIndex, setCurrentTextIndex] = useState(
+//     Math.floor(Math.random() * 7)
+//   );
+//   const [displayedText, setDisplayedText] = useState("");
+
+//   useEffect(() => {
+//     const timeoutId = setTimeout(() => {
+//       setDisplayedText(cheerTexts[currentTextIndex]);
+//       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % cheerTexts.length);
+//     }, 400);
+
+//     return () => clearTimeout(timeoutId);
+//   }, [currentTextIndex, cheerTexts]);
+
+//   return displayedText;
+// }
+
+export function NavigateLoading() {
+  const { navigateLoading } = useCommonStore();
+  const loadingControls = useAnimation();
   const cheerTexts = useMemo(
     () => [
       "phuckh17ng",
@@ -96,7 +125,9 @@ function TypingText() {
     []
   );
 
-  const [currentTextIndex, setCurrentTextIndex] = useState(5);
+  const randomIndex = Math.floor(Math.random() * cheerTexts.length);
+
+  const [currentTextIndex, setCurrentTextIndex] = useState(randomIndex);
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
@@ -106,15 +137,7 @@ function TypingText() {
     }, 400);
 
     return () => clearTimeout(timeoutId);
-  }, [currentTextIndex, cheerTexts]);
-
-  return displayedText;
-}
-
-export function NavigateLoading() {
-  const { navigateLoading } = useCommonStore();
-
-  const loadingControls = useAnimation();
+  }, [currentTextIndex, cheerTexts, randomIndex]);
 
   return (
     <motion.div
@@ -144,12 +167,12 @@ export function NavigateLoading() {
           }
           transition={
             navigateLoading.animate === "closing"
-              ? { delay: 1.2, duration: 1, ease: "linear" }
+              ? { delay: 1.2, duration: 0.2, ease: "linear" }
               : { duration: 0.2, ease: "linear" }
           }
           className="text-nowrap font-pacifico text-center text-2xl absolute w-full bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 tracking-widest"
         >
-          <TypingText />
+          {displayedText}
         </motion.p>
       </motion.div>
       <motion.div
@@ -175,12 +198,12 @@ export function NavigateLoading() {
           }
           transition={
             navigateLoading.animate === "closing"
-              ? { delay: 1.2, duration: 1, ease: "linear" }
+              ? { delay: 1.2, duration: 0.2, ease: "linear" }
               : { duration: 0.2, ease: "linear" }
           }
           className="text-nowrap font-pacifico text-center text-2xl absolute top-0 -translate-y-1/2 w-full left-1/2 -translate-x-1/2 tracking-widest"
         >
-          <TypingText />
+          {displayedText}
         </motion.p>
       </motion.div>
     </motion.div>

@@ -38,6 +38,14 @@
   }
 }
 
+@media screen and (width > 2400px) {
+  :root,
+  .header--container {
+    max-width: 2400px;
+    margin: 0 auto;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -97,6 +105,7 @@
     --color-border: 226 218 210;
     --color-icon: 17 17 17;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;

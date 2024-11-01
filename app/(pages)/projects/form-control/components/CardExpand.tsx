@@ -1,3 +1,5 @@
+import { useCommonStore } from "@/app/stores/commonStore";
+import clsx from "clsx";
 import { motion } from "framer-motion";
 import React, { useCallback, useState } from "react";
 import { IoCheckmark, IoCopyOutline, IoRemove } from "react-icons/io5";
@@ -7,8 +9,6 @@ import {
   atomOneLight,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { Item } from "../page";
-import { useCommonStore } from "@/app/stores/commonStore";
-import clsx from "clsx";
 
 type Props = {
   selectedCard: Item;

@@ -114,7 +114,7 @@ const HeroLoading = (props: Props) => {
             setTimeout(() => {
               setFristVisit(false);
               setLoading();
-            }, 3200);
+            }, 4000);
           }}
         >
           Enter

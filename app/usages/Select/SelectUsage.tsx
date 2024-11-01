@@ -171,7 +171,7 @@ const SelectUsage = () => {
             onOptionChange={handleSelectOption}
             optionList={optionList}
           />
-          {country && <p className="mt-6 text-black">{renderText}</p>}
+          {country && <p className="mt-6 text-primary">{renderText}</p>}
         </div>
       </FormikProvider>
     ),

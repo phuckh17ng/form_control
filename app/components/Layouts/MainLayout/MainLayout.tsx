@@ -2,6 +2,7 @@
 
 import { useCommonStore } from "@/app/stores/commonStore";
 import { createTheme, PaletteMode, ThemeProvider } from "@mui/material";
+import clsx from "clsx";
 import { motion, useAnimation } from "framer-motion";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import Footer from "../Footer";
@@ -39,7 +40,7 @@ const MainLayout = (props: Props) => {
         transition: {
           duration: 1.2,
           ease: "easeInOut",
-          delay: navigateLoading.animate === "opening" ? 1.2 : 0,
+          delay: navigateLoading.animate === "opening" ? 1 : 0,
         },
       },
       open: {
@@ -51,7 +52,7 @@ const MainLayout = (props: Props) => {
         transition: {
           duration: 1.2,
           ease: "easeInOut",
-          delay: navigateLoading.animate === "opening" ? 1.2 : 0,
+          delay: navigateLoading.animate === "opening" ? 1.4 : 0,
         },
       },
     }),
@@ -103,11 +104,12 @@ const MainLayout = (props: Props) => {
           variants={motionVariants}
           initial="close"
           animate={controls}
-          className="!blur-none"
+          className={clsx(!isLoading && "!blur-none")}
         >
           {children}
         </motion.div>
       </ThemeProvider>
+
       {/* Footer */}
       <Footer />
 

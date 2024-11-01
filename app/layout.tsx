@@ -27,7 +27,7 @@ export default function RootLayout({
       className={theme}
       style={{ fontFamily: plusJakartaSans.style.fontFamily }}
     >
-      <body className="bg-background text-primary transition-[background-color,color] duration-200">
+      <body className="bg-background text-primary transition-[background-color,color] duration-200 selection:text-background selection:bg-primary/85">
         <ReactQueryProvider>
           <SmoothScrolling>
             <MainLayout serverTheme={theme as never} mode={mode}>

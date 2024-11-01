@@ -2,20 +2,6 @@
 
 import Card from "@/app/components/Card";
 import useDebounce from "@/app/hooks/useDebounce";
-import { TextFieldSyntax, PasswordUsageSyntax } from "@/app/syntax/Password";
-import AutocompleteUsage from "@/app/usages/Autocomplete/AutocompleteUsage";
-import MultiCheckboxUsage from "@/app/usages/Checkbox/MultiCheckboxUsage";
-import RadioGroupUsage from "@/app/usages/Radio/RadioGroupUsage";
-import SelectUsage from "@/app/usages/Select/SelectUsage";
-import SliderUsage from "@/app/usages/Slider/SliderUsage";
-import PasswordUsage from "@/app/usages/TextField/PasswordUsage";
-import { AnimatePresence, motion, useDragControls } from "framer-motion";
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
-import { IoSearch } from "react-icons/io5";
-import CardExpand from "./components/CardExpand";
-import "./styles.css";
-import { RadioGroupSyntax, RadioUsageSyntax } from "@/app/syntax/Radio";
-import { SelectSyntax, SelectUsageSyntax } from "@/app/syntax/Select";
 import {
   AutocompleteSyntax,
   AutoCompleteUsageSyntax,
@@ -25,7 +11,22 @@ import {
   CheckboxSyntax,
   MultiCheckboxUsageSyntax,
 } from "@/app/syntax/MultiCheckbox";
+import { PasswordUsageSyntax, TextFieldSyntax } from "@/app/syntax/Password";
+import { RadioGroupSyntax, RadioUsageSyntax } from "@/app/syntax/Radio";
+import { SelectSyntax, SelectUsageSyntax } from "@/app/syntax/Select";
 import { SliderSyntax, SliderUsageSyntax } from "@/app/syntax/Slider";
+import AutocompleteUsage from "@/app/usages/Autocomplete/AutocompleteUsage";
+import MultiCheckboxUsage from "@/app/usages/Checkbox/MultiCheckboxUsage";
+import RadioGroupUsage from "@/app/usages/Radio/RadioGroupUsage";
+import SelectUsage from "@/app/usages/Select/SelectUsage";
+import SliderUsage from "@/app/usages/Slider/SliderUsage";
+import PasswordUsage from "@/app/usages/TextField/PasswordUsage";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
+import dynamic from "next/dynamic";
+import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
+import { IoSearch } from "react-icons/io5";
+import CardExpand from "./components/CardExpand";
+import "./styles.css";
 
 export type Item = {
   id: string;
@@ -37,6 +38,8 @@ export type Item = {
     content: string;
   }[];
 };
+
+const BackdropVideo = dynamic(() => import("./components/BackdropVideo"));
 
 export default function FormControl() {
   // Framer motion controls
