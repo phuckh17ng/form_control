@@ -9,6 +9,8 @@ export type CommonState = {
     animate?: "opening" | "closing";
   };
   isFirstVisit: boolean;
+  isUseCustomCursor: boolean;
+  cursor?: string;
 };
 
 export type CommonActions = {
@@ -19,6 +21,7 @@ export type CommonActions = {
     anmiate?: "opening" | "closing"
   ) => void;
   setFristVisit: (val: boolean) => void;
+  setCustomCursor: (val: boolean, cursor?: string) => void;
 };
 
 export type CommonStore = CommonState & CommonActions;
@@ -29,6 +32,8 @@ export const initCommonStore = (): CommonState => {
     navigateLoading: { isNavigating: false },
     isFirstVisit: true,
     theme: undefined,
+    isUseCustomCursor: false,
+    cursor: "default",
   };
 };
 
@@ -37,6 +42,8 @@ export const defaultInitState: CommonState = {
   navigateLoading: { isNavigating: false },
   isFirstVisit: true,
   theme: undefined,
+  isUseCustomCursor: false,
+  cursor: "default",
 };
 
 export const useCommonStore = create<CommonStore>((set) => ({
@@ -57,4 +64,6 @@ export const useCommonStore = create<CommonStore>((set) => ({
       ...state,
       isFirstVisit: val,
     })),
+  setCustomCursor: (val, cursor) =>
+    set((state) => ({ ...state, isUseCustomCursor: val, cursor: cursor })),
 }));

@@ -1,9 +1,17 @@
 "use client";
 
 import TextHyperLink from "@/app/components/Text";
+import { useCommonStore } from "@/app/stores/commonStore";
+import { useEffect } from "react";
 import { BsArrowDown } from "react-icons/bs";
 
 export default function About() {
+  const { setCustomCursor } = useCommonStore();
+
+  useEffect(() => {
+    setCustomCursor(true, "default");
+  }, [setCustomCursor]);
+
   return (
     <div className="w-full px-32 h-full max-md:px-12">
       {/* Welcome */}
@@ -13,7 +21,7 @@ export default function About() {
             Hi there.
           </div>
         </div>
-        <div className="absolute top-0 right-0 -translate-y-1/2 -translate-x-1/2 max-md:hidden">
+        <div className="absolute top-0 right-0 -translate-y-1/2 -translate-x-[4vw] max-md:hidden">
           <div className="w-fit h-fit relative select-none">
             <div className="absolute top-1/2 left-1/2 border-[3px] rounded-full w-[54px] h-[100px] -translate-x-1/2 -translate-y-1/2 flex items-end justify-center">
               <BsArrowDown className="text-[40px] mb-[8px] font-thin" />
@@ -46,15 +54,32 @@ export default function About() {
           </div>
         </div>
         <div className="w-full col-span-7 col-start-3 max-lg:col-start-1 max-md:col-span-12 mt-4">
-          <p className="text-4xl tracking-wider leading-loose max-lg:text-3xl text-primary/70 font-semibold">
+          <div className="text-4xl tracking-wider leading-loose max-lg:text-3xl text-primary/70 font-semibold">
             First of all, It&apos;s wonderful to be here. Welcome!
             <br />
             My name is Le Mau Phuc{" "}
-            <span className="font-bold text-4xl max-lg:text-3xl tracking-wider leading-loose text-primary/90">
-              Khang
-            </span>
-            , currently living and working in Ho Chi Minh City
-          </p>
+            <div
+              className="relative px-1 cursor-help inline-block"
+              onMouseEnter={() => setCustomCursor(true, "helper")}
+              onMouseLeave={() => setCustomCursor(true, "default")}
+            >
+              <p className="font-bold text-4xl max-lg:text-3xl tracking-wider text-primary/90">
+                Khang
+              </p>
+              <div className="absolute -bottom-2 -right-2 w-28 h-6 bg-[#eb5930] z-[-1]" />
+            </div>
+            , currently living and working in{" "}
+            <div
+              className="relative px-1 cursor-help inline-block"
+              onMouseEnter={() => setCustomCursor(true, "helper")}
+              onMouseLeave={() => setCustomCursor(true, "default")}
+            >
+              <p className="font-bold text-4xl max-lg:text-3xl tracking-wider leading-0 text-primary/90">
+                Ho Chi Minh City
+              </p>
+              <div className="absolute -bottom-2 -right-2 w-72 h-6 bg-[#eb5930] z-[-1]" />
+            </div>
+          </div>
         </div>
       </section>
       <section className="py-24 w-full h-full">

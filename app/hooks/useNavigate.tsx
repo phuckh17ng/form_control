@@ -6,7 +6,7 @@ import { useCommonStore } from "../stores/commonStore";
 
 export default function useNavigate() {
   const router = useRouter();
-  const { setNavigateLoading, setLoading } = useCommonStore();
+  const { setNavigateLoading, setCustomCursor, setLoading } = useCommonStore();
   const pathname = usePathname();
   // Save pathname on component mount into a REF
   const savedPathNameRef = useRef(pathname);
@@ -14,6 +14,7 @@ export default function useNavigate() {
   useEffect(() => {
     // If REF has been changed, do the stuff
     if (savedPathNameRef.current !== pathname) {
+      setCustomCursor(false);
       setNavigateLoading(true, "opening");
       const timeoutId = setTimeout(() => {
         setNavigateLoading(false, "opening");
@@ -27,7 +28,7 @@ export default function useNavigate() {
         clearTimeout(timeoutId);
       };
     }
-  }, [pathname, setLoading, setNavigateLoading]);
+  }, [pathname, setCustomCursor, setLoading, setNavigateLoading]);
 
   const navigate = useCallback(
     // Navigate to the given path with a delay before transitioning

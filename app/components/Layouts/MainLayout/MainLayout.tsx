@@ -9,6 +9,7 @@ import Footer from "../Footer";
 import Header from "../Header";
 import HeroLoading from "../HeroLoading";
 import { NavigateLoading, PreventClickMask } from "../Loading/Loading";
+import Cursor from "../../Cursor";
 
 type Props = {
   children: ReactNode;
@@ -18,7 +19,8 @@ type Props = {
 
 const MainLayout = (props: Props) => {
   const { children, mode, serverTheme } = props;
-  const { isLoading, isFirstVisit, navigateLoading, theme } = useCommonStore();
+  const { isLoading, isFirstVisit, navigateLoading, isUseCustomCursor, theme } =
+    useCommonStore();
   const controls = useAnimation();
   const safari = useRef(false);
   const [isEnter, setIsEnter] = useState(false);
@@ -95,39 +97,41 @@ const MainLayout = (props: Props) => {
       {/* Loading Mask */}
       {isLoading && <PreventClickMask />}
 
-      {/* Header */}
-      <Header isEnter={isEnter} serverTheme={serverTheme} serverMode={mode} />
+      {/* Cursor Customize */}
+      {isUseCustomCursor && <Cursor />}
 
-      {/* Children */}
-      <ThemeProvider theme={MUITheme}>
-        <motion.div
-          variants={motionVariants}
-          initial="close"
-          animate={controls}
-          className={clsx(!isLoading && "!blur-none")}
-        >
-          {children}
-        </motion.div>
-      </ThemeProvider>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Background Mask */}
-      <section className="fixed top-0 left-0 z-[-1] w-full h-screen opacity-35 mix-blend-multiply dark:bg-background bg-background">
-        <video
-          muted
-          autoPlay
-          loop
-          playsInline
-          className="h-full w-full object-cover mix-blend-multiply"
-        >
-          <source
-            src="https://www.usestate.org/assets/video/home-background.mp4"
-            type="video/mp4"
-          />
-        </video>
-      </section>
+      <div className={clsx(isUseCustomCursor && "!cursor-none")}>
+        {/* Header */}
+        <Header isEnter={isEnter} serverTheme={serverTheme} serverMode={mode} />
+        {/* Children */}
+        <ThemeProvider theme={MUITheme}>
+          <motion.div
+            variants={motionVariants}
+            initial="close"
+            animate={controls}
+            className={clsx(!isLoading && "!blur-none")}
+          >
+            {children}
+          </motion.div>
+        </ThemeProvider>
+        {/* Footer */}
+        <Footer />
+        {/* Background Mask */}
+        <section className="fixed top-0 left-0 z-[-1] w-full h-screen opacity-35 mix-blend-multiply dark:bg-background bg-background">
+          <video
+            muted
+            autoPlay
+            loop
+            playsInline
+            className="h-full w-full object-cover mix-blend-multiply"
+          >
+            <source
+              src="https://www.usestate.org/assets/video/home-background.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </section>
+      </div>
     </>
   );
 };
