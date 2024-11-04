@@ -17,7 +17,7 @@ export default function About() {
       {/* Welcome */}
       <section className="mt-[24rem] w-full h-full grid grid-cols-12 relative">
         <div className="w-full col-span-7 col-start-2 max-lg:col-start-1 max-md:col-span-12">
-          <div className="flex justify-start font-extrabold text-[10rem] tracking-wider max-lg:text-[7rem] max-md:text-[6rem] leading-0 texte">
+          <div className="flex justify-start font-extrabold text-[10rem] tracking-wider max-lg:text-[7rem] max-md:text-[6rem] leading-0">
             Hi there.
           </div>
         </div>
@@ -70,8 +70,8 @@ export default function About() {
             </div>
             , currently living and working in{" "}
             <div
-              className="relative px-1 cursor-help inline-block"
-              onMouseEnter={() => setCustomCursor(true, "helper")}
+              className="relative px-1 cursor-none inline-block"
+              onMouseEnter={() => setCustomCursor(true, "images")}
               onMouseLeave={() => setCustomCursor(true, "default")}
             >
               <p className="font-bold text-4xl max-lg:text-3xl tracking-wider leading-0 text-primary/90">
@@ -91,6 +91,7 @@ export default function About() {
             <TextHyperLink>Facebook</TextHyperLink>
             <TextHyperLink>Instagram</TextHyperLink>
             <TextHyperLink>Resume</TextHyperLink>
+            <TextHyperLink>Spotify</TextHyperLink>
           </div>
           <div className="col-end-12 col-span-6 justify-self-end text-2xl tracking-wider leading-normal max-lg:text-xl text-primary/70">
             My work is mainly focused on third-dimension modeling, texturing and
