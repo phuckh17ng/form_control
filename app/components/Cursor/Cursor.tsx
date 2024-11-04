@@ -48,27 +48,29 @@ const CursorImages = () => {
     },
   };
 
-  const cheerTexts = useMemo(
+  const images = useMemo(
     () => [
-      "/images/my_pic.jpg",
-      "/images/my_pic1.jpg",
-      "/images/my_pic2.jpg",
-      "/images/my_pic3.jpg",
+      "/images/image1.png",
+      "/images/image2.png",
+      "/images/image3.png",
+      "/images/image4.png",
     ],
     []
   );
 
-  const [currentTextIndex, setCurrentTextIndex] = useState(1);
-  const [displayedText, setDisplayedText] = useState("/images/my_pic.jpg");
+  const [currentImageIndex, setCurrentImageIndex] = useState(1);
+  const [displayedImage, setDisplayedImage] = useState("/images/image1.png");
 
   useEffect(() => {
+    if (cursor !== "images") return;
     const timeoutId = setTimeout(() => {
-      setDisplayedText(cheerTexts[currentTextIndex]);
-      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % cheerTexts.length);
+      setDisplayedImage(images[currentImageIndex]);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 4200);
 
     return () => clearTimeout(timeoutId);
-  }, [currentTextIndex, cheerTexts, cursor]);
+  }, [currentImageIndex, images, cursor]);
+
   return (
     cursor === "images" && (
       <motion.div
@@ -90,14 +92,22 @@ const CursorImages = () => {
             ></motion.div>
           </div>
           <Image
-            src={displayedText}
-            className="w-[30rem] h-auto"
+            src={displayedImage}
+            className="w-[30rem] h-[22.5rem] aspect-auto transition-none object-contain"
             alt="hcm_city"
             width={0}
             height={0}
+            translate="no"
+            objectFit="contain"
+            objectPosition="center"
+            layout="fixed"
+            loading="eager"
+            unoptimized
             sizes="100vw"
+            priority
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQY..."
           />
-
           <p className="font-pacifico text-end text-[#dbdbdb] absolute bottom-3 right-3 text-base">
             phuckh17ng
           </p>
