@@ -109,12 +109,10 @@ const CursorImages = () => {
               objectFit="contain"
               objectPosition="center"
               layout="fixed"
-              loading="eager"
-              unoptimized
+              loading="lazy"
+              // unoptimized
               sizes="100vw"
-              priority
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQY..."
+              // priority
             />
 
             <p className="font-pacifico text-end text-[#dbdbdb] absolute bottom-3 right-3 text-base">
