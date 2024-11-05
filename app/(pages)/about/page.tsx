@@ -64,11 +64,11 @@ export default function About() {
               onMouseLeave={() => setCustomCursor(true, "default")}
             >
               <p className="font-bold text-4xl max-lg:text-3xl tracking-wider text-primary/90 z-10 relative">
-                Khang
+                Khang,&nbsp;
               </p>
-              <div className="absolute -bottom-2 -right-2 w-28 h-6 bg-[#eb5930] z-[1] " />
+              <div className="absolute -bottom-2 right-2 w-[calc(100%-2rem)] h-6 bg-[#eb5930] z-[1]" />
             </div>
-            , currently living and working in{" "}
+            currently living and working in{" "}
             <div
               className="relative px-1 cursor-none inline-block"
               onMouseEnter={() => setCustomCursor(true, "images")}
@@ -77,7 +77,7 @@ export default function About() {
               <p className="font-bold text-4xl max-lg:text-3xl tracking-wider leading-0 text-primary/90 relative z-10">
                 Ho Chi Minh City
               </p>
-              <div className="absolute -bottom-2 -right-2 w-72 h-6 bg-[#eb5930] z-[1]" />
+              <div className="absolute -bottom-2 -right-2 w-[calc(100%-2rem)] h-6 bg-[#eb5930] z-[1]" />
             </div>
           </div>
         </div>

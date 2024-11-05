@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { useCallback, useEffect } from "react";
 import { IoMenu, IoMoon, IoSunny } from "react-icons/io5";
 import Text3d from "../../Text3d";
+import Head from "next/head";
 
 type Props = {
   serverTheme?: PaletteMode | undefined;
@@ -81,6 +82,18 @@ const Header = (props: Props) => {
 
   return (
     <header className="fixed top-0 left-0 flex justify-between items-center py-12 px-24 z-[100] w-full select-none max-md:py-6 max-md:px-12 backdrop-blur-sm">
+      <Head>
+        <link rel="preload" href="/images/image1.png" as="image" />
+      </Head>
+      <Head>
+        <link rel="preload" href="/images/image1.png" as="image" />
+      </Head>
+      <Head>
+        <link rel="preload" href="/images/image3.png" as="image" />
+      </Head>
+      <Head>
+        <link rel="preload" href="/images/image4.png" as="image" />
+      </Head>
       <div className="header--container flex justify-between items-center w-full">
         <motion.h1
           animate={
