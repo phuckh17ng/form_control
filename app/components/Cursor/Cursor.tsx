@@ -110,7 +110,7 @@ const CursorImages = () => {
               objectPosition="center"
               layout="fixed"
               loading="lazy"
-              // unoptimized
+              unoptimized
               sizes="100vw"
               // priority
             />
