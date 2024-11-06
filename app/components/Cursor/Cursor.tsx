@@ -4,7 +4,7 @@ import { useCommonStore } from "@/app/stores/commonStore";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const CursorDefault = () => {
   const { cursor } = useCommonStore();
@@ -57,10 +57,10 @@ const CursorImages = () => {
 
   const images = useMemo(
     () => [
-      "/images/image1.png",
-      "/images/image2.png",
-      "/images/image3.png",
-      "/images/image4.png",
+      "http://localhost:8888/public/images/image1.png",
+      "http://localhost:8888/public/images/image2.png",
+      "http://localhost:8888/public/images/image3.png",
+      "http://localhost:8888/public/images/image4.png",
     ],
     []
   );
@@ -133,16 +133,6 @@ const CursorImages = () => {
 
 const Cursor = () => {
   const { cursor } = useCommonStore();
-
-  const fetchImages = useCallback(() => {
-    fetch("/public/images/image2.png")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
-
-  useEffect(() => {
-    fetchImages();
-  }, [fetchImages]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("mousemove", (e) => {
