@@ -4,7 +4,7 @@ import { useCommonStore } from "@/app/stores/commonStore";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const CursorDefault = () => {
   const { cursor } = useCommonStore();
@@ -111,7 +111,7 @@ const CursorImages = () => {
               layout="fixed"
               loading="lazy"
               unoptimized
-              sizes="100vw"
+              sizes="(max-width: 30rem) 480px, 800px"
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQY..."
               loader={({ src }) => `http://localhost:3000/${src}`}
@@ -133,6 +133,16 @@ const CursorImages = () => {
 
 const Cursor = () => {
   const { cursor } = useCommonStore();
+
+  const fetchImages = useCallback(() => {
+    fetch("/public/images/image2.png")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
+
+  useEffect(() => {
+    fetchImages();
+  }, [fetchImages]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("mousemove", (e) => {
