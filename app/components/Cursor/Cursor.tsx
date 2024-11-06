@@ -101,7 +101,7 @@ const CursorImages = () => {
             </div>
             <Image
               src={displayedImage}
-              className="w-[30rem] h-[22.5rem] aspect-auto transition-none object-contain"
+              className="w-[30rem] max-h-[22.5rem] aspect-auto transition-none object-contain"
               alt="hcm_city"
               width={0}
               height={0}
@@ -112,6 +112,9 @@ const CursorImages = () => {
               loading="lazy"
               unoptimized
               sizes="100vw"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQY..."
+              loader={({ src }) => `http://localhost:3000/${src}`}
               // priority
             />
 
