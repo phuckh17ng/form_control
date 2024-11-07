@@ -57,10 +57,10 @@ const CursorImages = () => {
 
   const images = useMemo(
     () => [
-      "http://localhost:8888/public/images/image1.png",
-      "http://localhost:8888/public/images/image2.png",
-      "http://localhost:8888/public/images/image3.png",
-      "http://localhost:8888/public/images/image4.png",
+      "/images/image1.png",
+      "/images/image2.png",
+      "/images/image3.png",
+      "/images/image4.png",
     ],
     []
   );
