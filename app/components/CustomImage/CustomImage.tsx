@@ -5,20 +5,20 @@ import Image from "next/image";
 import clsx from "clsx";
 
 const CustomImage = ({ imgSrc }: { imgSrc: string }) => {
-  const loader = ({
-    width,
-    quality,
-    src,
-  }: {
-    width: number;
-    quality?: number;
-    src: string;
-  }) => {
-    const props = [`w=${width}`];
-    if (quality) props.push(`q=${quality}`);
-    const queryStr = props.join("&");
-    return `https://form-control-api.vercel.app${src}?${queryStr}`;
-  };
+  // const loader = ({
+  //   width,
+  //   quality,
+  //   src,
+  // }: {
+  //   width: number;
+  //   quality?: number;
+  //   src: string;
+  // }) => {
+  //   const props = [`w=${width}`];
+  //   if (quality) props.push(`q=${quality}`);
+  //   const queryStr = props.join("&");
+  //   return `https://form-control-api.vercel.app${imgSrc}?${queryStr}`;
+  // };
 
   const [loading, setLoading] = useState(true);
   return (
@@ -43,7 +43,7 @@ const CustomImage = ({ imgSrc }: { imgSrc: string }) => {
         )}
         alt="image"
         src={imgSrc}
-        loader={loader}
+        // loader={loader}
         // sizes="(max-width: 30rem) 480px, 800px"
         // priority
         // width={0}
