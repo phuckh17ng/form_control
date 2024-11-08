@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import CustomImage from "../CustomImage/CustomImage";
 
 const CursorDefault = () => {
   const { cursor } = useCommonStore();
@@ -56,19 +57,12 @@ const CursorImages = () => {
   );
 
   const images = useMemo(
-    () => [
-      "http://localhost:8888/public/images/image1.png",
-      "http://localhost:8888/public/images/image2.png",
-      "http://localhost:8888/public/images/image3.png",
-      "http://localhost:8888/public/images/image4.png",
-    ],
+    () => ["/image1.png", "/image2.png", "/image3.png", "/image4.png"],
     []
   );
 
   const [currentImageIndex, setCurrentImageIndex] = useState(1);
-  const [displayedImage, setDisplayedImage] = useState(
-    "http://localhost:8888/public/images/image1.png"
-  );
+  const [displayedImage, setDisplayedImage] = useState("/image1.png");
 
   useEffect(() => {
     if (cursor !== "images") return;
@@ -92,7 +86,7 @@ const CursorImages = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="relative">
-            <div className="absolute bottom-3 left-1/2 text-[#dbdbdb] -translate-x-1/2 bg-[#dbdbdb]/50 w-28 h-4 rounded-full overflow-hidden">
+            <div className="z-10 absolute bottom-3 left-1/2 text-[#dbdbdb] -translate-x-1/2 bg-[#dbdbdb]/50 w-28 h-4 rounded-full overflow-hidden">
               <motion.div
                 variants={progressVariants}
                 initial="initial"
@@ -101,7 +95,7 @@ const CursorImages = () => {
                 className="h-full bg-[#dbdbdb]"
               ></motion.div>
             </div>
-            <Image
+            {/* <Image
               src={displayedImage}
               className="w-[30rem] max-h-[22.5rem] aspect-auto transition-none object-contain"
               alt="hcm_city"
@@ -115,9 +109,9 @@ const CursorImages = () => {
               sizes="(max-width: 30rem) 480px, 800px"
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQY..."
-              loader={({ src }) => src}
               priority
-            />
+            /> */}
+            <CustomImage imgSrc={displayedImage} />
 
             <p className="font-pacifico text-end text-[#dbdbdb] absolute bottom-3 right-3 text-base">
               phuckh17ng
