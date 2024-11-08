@@ -3,7 +3,6 @@
 import { useCommonStore } from "@/app/stores/commonStore";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import CustomImage from "../CustomImage/CustomImage";
 

@@ -1,6 +1,5 @@
 "use client";
 
-import CustomImage from "@/app/components/CustomImage/CustomImage";
 import TextHyperLink from "@/app/components/Text";
 import { useCommonStore } from "@/app/stores/commonStore";
 import { useEffect } from "react";
