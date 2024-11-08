@@ -17,6 +17,36 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 
 // Định tuyến xử lý POST để tải lên ảnh
+// app.post("/", upload.single("image"), async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: "No image uploaded" });
+//   }
+
+//   const imageBuffer = req.file.buffer;
+//   const fileName = req.file.originalname;
+//   const fileExtension = path.extname(fileName);
+//   const baseFilename = path.basename(fileName, fileExtension);
+
+//   // Lưu ảnh gốc
+//   const originalPath = path.join(imagePath, `${baseFilename}${fileExtension}`);
+//   fs.writeFileSync(originalPath, imageBuffer);
+
+//   // Tạo và lưu ảnh thumbnail
+//   const thumbnailBuffer = await sharp(imageBuffer)
+//     .blur(1)
+//     .resize(10) // Thay đổi kích thước nhỏ hơn để tạo thumbnail
+//     .toBuffer();
+
+//   const thumbnailPath = path.join(
+//     imagePath,
+//     `${baseFilename}_thumbnail${fileExtension}`
+//   );
+//   fs.writeFileSync(thumbnailPath, thumbnailBuffer);
+
+//   // Gửi phản hồi thành công
+//   res.status(200).send("OK");
+// });
+
 app.post("/", upload.single("image"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No image uploaded" });
@@ -27,20 +57,19 @@ app.post("/", upload.single("image"), async (req, res) => {
   const fileExtension = path.extname(fileName);
   const baseFilename = path.basename(fileName, fileExtension);
 
-  // Lưu ảnh gốc
-  const originalPath = path.join(imagePath, `${baseFilename}${fileExtension}`);
-  fs.writeFileSync(originalPath, imageBuffer);
+  // Lưu ảnh gốc dưới dạng WebP
+  const originalPath = path.join(imagePath, `${baseFilename}.webp`);
+  const originalWebPBuffer = await sharp(imageBuffer).webp().toBuffer();
+  fs.writeFileSync(originalPath, originalWebPBuffer);
 
-  // Tạo và lưu ảnh thumbnail
+  // Tạo và lưu ảnh thumbnail dưới dạng WebP
   const thumbnailBuffer = await sharp(imageBuffer)
     .blur(1)
     .resize(10) // Thay đổi kích thước nhỏ hơn để tạo thumbnail
+    .webp() // Chuyển đổi thành định dạng WebP
     .toBuffer();
 
-  const thumbnailPath = path.join(
-    imagePath,
-    `${baseFilename}_thumbnail${fileExtension}`
-  );
+  const thumbnailPath = path.join(imagePath, `${baseFilename}_thumbnail.webp`);
   fs.writeFileSync(thumbnailPath, thumbnailBuffer);
 
   // Gửi phản hồi thành công
@@ -60,12 +89,12 @@ app.get("/:src", async (req, res) => {
 
   if (thumbnail) {
     // Tạo đường dẫn thumbnail
-    const thumbnailPath = path.join(__dirname, `${basename}_thumbnail.png`);
+    const thumbnailPath = path.join(__dirname, `${basename}_thumbnail.webp`);
 
     // Kiểm tra nếu file thumbnail tồn tại
     if (fs.existsSync(thumbnailPath)) {
       const thumbnailImage = fs.readFileSync(thumbnailPath);
-      res.setHeader("Content-Type", "image/png");
+      res.setHeader("Content-Type", "image/webp");
       return res.send(thumbnailImage); // Gửi lại ảnh thumbnail
     } else {
       return res.status(404).send("Thumbnail not found");
@@ -84,11 +113,11 @@ app.get("/:src", async (req, res) => {
   try {
     const resizedImageBuffer = await sharp(originalImage)
       .resize(width) // Nếu width không undefined, nó sẽ resize
-      .png({ quality }) // Thực hiện nén chất lượng PNG
+      .webp({ quality }) // Chuyển đổi và nén thành WebP
       .toBuffer();
 
-    // Đặt header content type đúng cho hình ảnh PNG
-    res.setHeader("Content-Type", "image/png");
+    // Đặt header content type đúng cho hình ảnh WebP
+    res.setHeader("Content-Type", "image/webp");
     return res.send(resizedImageBuffer); // Gửi lại ảnh đã được resize
   } catch (err) {
     console.error("Error processing image:", err);

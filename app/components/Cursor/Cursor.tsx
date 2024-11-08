@@ -1,14 +1,11 @@
 "use client";
 
 import { useCommonStore } from "@/app/stores/commonStore";
-import Image1 from "@/public/images/image1.png";
-import Image2 from "@/public/images/image2.png";
-import Image3 from "@/public/images/image3.png";
-import Image4 from "@/public/images/image4.png";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+// import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import CustomImage from "../CustomImage/CustomImage";
 
 const CursorDefault = () => {
   const { cursor } = useCommonStore();
@@ -59,10 +56,13 @@ const CursorImages = () => {
     []
   );
 
-  const images = useMemo(() => [Image1, Image2, Image3, Image4], []);
+  const images = useMemo(
+    () => ["/image1.webp", "/image2.webp", "/image3.webp", "/image4.webp"],
+    []
+  );
 
   const [currentImageIndex, setCurrentImageIndex] = useState(1);
-  const [displayedImage, setDisplayedImage] = useState(Image1);
+  const [displayedImage, setDisplayedImage] = useState("/image1.webp");
 
   useEffect(() => {
     if (cursor !== "images") return;
@@ -95,7 +95,7 @@ const CursorImages = () => {
                 className="h-full bg-[#dbdbdb]"
               ></motion.div>
             </div>
-            <Image
+            {/* <Image
               src={displayedImage}
               className="w-[30rem] max-h-[22.5rem] aspect-auto transition-none object-contain"
               alt="hcm_city"
@@ -110,8 +110,8 @@ const CursorImages = () => {
               placeholder="blur"
               // blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQY..."
               priority
-            />
-            {/* <CustomImage imgSrc={displayedImage} /> */}
+            /> */}
+            <CustomImage imgSrc={displayedImage} />
 
             <p className="font-pacifico text-end text-[#dbdbdb] absolute bottom-3 right-3 text-base">
               phuckh17ng

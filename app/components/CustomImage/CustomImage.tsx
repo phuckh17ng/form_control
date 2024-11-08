@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import Image from "next/image";
+import { useState } from "react";
 
 const CustomImage = ({ imgSrc }: { imgSrc: string }) => {
   const loader = ({
@@ -19,7 +20,7 @@ const CustomImage = ({ imgSrc }: { imgSrc: string }) => {
     return `https://form-control-api.vercel.app${src}?${queryStr}`;
   };
 
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   return (
     <div className="relative w-[30rem] max-h-[22.5rem] h-full aspect-square">
       <Image
@@ -37,7 +38,8 @@ const CustomImage = ({ imgSrc }: { imgSrc: string }) => {
       />
       <Image
         className={clsx(
-          "w-full h-full object-cover transition-opacity duration-150 ease-in-out"
+          "w-full h-full object-cover transition-opacity duration-150 ease-in-out",
+          loading ? "opacity-0" : "opacity-100"
         )}
         alt="image"
         src={imgSrc}
@@ -47,7 +49,7 @@ const CustomImage = ({ imgSrc }: { imgSrc: string }) => {
         // width={0}
         // height={0}
         fill
-        // onLoadingComplete={() => setLoading(false)}
+        onLoadingComplete={() => setLoading(false)}
       />
     </div>
   );
