@@ -80,6 +80,25 @@ const HeroLoading = (props: Props) => {
   const div2Controls = useAnimation();
   const textControls = useAnimation();
 
+  const audio = new Audio("/audios/bg_music.mp3");
+  let currentVolume = 0;
+
+  const start = () => {
+    audio.volume = 0;
+    audio.currentTime = 7.9;
+    audio.loop = true;
+    audio.play();
+    const fadeInInterval = setInterval(() => {
+      currentVolume += 0.0002; // Tăng âm lượng lên 1% (bạn có thể điều chỉnh giá trị này)
+      audio.volume = currentVolume;
+
+      if (currentVolume >= 0.2) {
+        clearInterval(fadeInInterval); // Dừng tăng âm lượng khi đạt tối đa
+        audio.volume = 0.2; // Đảm bảo âm lượng là 1 (tránh sai số)
+      }
+    }, 20); // Thực hiện tăng âm lượng mỗi 20ms (bạn có thể điều chỉnh giá trị này)
+  };
+
   return (
     <motion.div
       animate={loadingControls}
@@ -99,6 +118,7 @@ const HeroLoading = (props: Props) => {
           onClick={() => {
             if (isEnterClicked) return;
             setEnterClicked(true);
+            if (isSoundOn) start();
             setLoading();
             buttonControls.start("button");
             div1Controls.start("div1");

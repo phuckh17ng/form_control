@@ -35,7 +35,7 @@ const CursorHelp = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          You can call me Khang :D
+          My name is Lê Mậu Phúc Khang, but you can just call me Khang ^^
         </motion.div>
       ),
     [cursor]

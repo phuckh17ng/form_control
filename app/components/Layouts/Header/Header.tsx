@@ -107,6 +107,7 @@ const Header = (props: Props) => {
           >
             <Text3d primary="About" />
           </motion.div>
+
           <motion.div
             className="max-md:hidden"
             animate={

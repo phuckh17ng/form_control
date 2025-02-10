@@ -1,9 +1,12 @@
 "use client";
 
-import TextHyperLink from "@/app/components/Text";
 import { useCommonStore } from "@/app/stores/commonStore";
 import { useEffect } from "react";
 import { BsArrowDown } from "react-icons/bs";
+import AboutMe from "./Components/About/AboutMe";
+import CoreValue from "./Components/CoreValue/CoreValue";
+import MyArts from "./Components/MyArts/MyArts";
+import Skills from "./Components/Skills/Skills";
 
 export default function About() {
   const { setCustomCursor } = useCommonStore();
@@ -18,7 +21,7 @@ export default function About() {
       <section className="mt-[24rem] w-full h-full grid grid-cols-12 relative">
         <div className="w-full col-span-7 col-start-2 max-lg:col-start-1 max-md:col-span-12">
           <div className="flex justify-start font-extrabold text-[10rem] tracking-wider max-lg:text-[7rem] max-md:text-[6rem] leading-0">
-            Hi there.
+            Hi there,
           </div>
         </div>
         <div className="absolute top-0 right-0 -translate-y-1/2 -translate-x-[4vw] max-md:hidden">
@@ -55,9 +58,9 @@ export default function About() {
         </div>
         <div className="w-full col-span-7 col-start-3 max-lg:col-start-1 max-md:col-span-12 mt-4">
           <div className="text-4xl tracking-wider leading-loose max-lg:text-3xl text-primary/70 font-semibold">
-            First of all, It&apos;s wonderful to be here. Welcome!
+            First of all, It&apos;s wonderful to have you here.
             <br />
-            My name is Le Mau Phuc{" "}
+            I&apos;m{" "}
             <div
               className="relative px-1 cursor-help inline-block"
               onMouseEnter={() => setCustomCursor(true, "helper")}
@@ -68,7 +71,7 @@ export default function About() {
               </p>
               <div className="absolute -bottom-2 right-2 w-[calc(100%-2rem)] h-6 bg-[#eb5930] z-[1]" />
             </div>
-            currently living and working in{" "}
+            {/* currently living and working in{" "}
             <div
               className="relative px-1 cursor-none inline-block"
               onMouseEnter={() => setCustomCursor(true, "images")}
@@ -78,50 +81,15 @@ export default function About() {
                 Ho Chi Minh City
               </p>
               <div className="absolute -bottom-2 -right-2 w-[calc(100%-2rem)] h-6 bg-[#eb5930] z-[1]" />
-            </div>
+            </div> */}
+            welcome to my home. Come on in, let me show you around ^^
           </div>
         </div>
       </section>
-      <section className="py-24 w-full h-full">
-        <div className="grid grid-cols-12 py-48">
-          <div className="col-span-3 col-start-3">
-            <TextHyperLink>Email</TextHyperLink>
-            <TextHyperLink>Linkedin</TextHyperLink>
-            <TextHyperLink>Github</TextHyperLink>
-            <TextHyperLink>Facebook</TextHyperLink>
-            <TextHyperLink>Instagram</TextHyperLink>
-            <TextHyperLink>Resume</TextHyperLink>
-            <TextHyperLink>Spotify</TextHyperLink>
-          </div>
-          <div className="col-end-12 col-span-6 justify-self-end text-2xl tracking-wider leading-normal max-lg:text-xl text-primary/70">
-            My work is mainly focused on third-dimension modeling, texturing and
-            rendering. I like exploring the creatures with a touch of dark
-            surrealism for characters and production.
-            <br />
-            <br /> Now I&apos;m an interactive media design student in Istanbul
-            ⏤ currently freelancing and seeking internship opportunities. My
-            work is mainly focused on third-dimension modeling, texturing and
-            rendering. I like exploring the creatures with a touch of dark
-            surrealism for characters and production.
-            <br />
-            <br /> Now I&apos;m an interactive media design student in Istanbul
-            ⏤ currently freelancing and seeking internship opportunities. My
-            work is mainly focused on third-dimension modeling, texturing and
-            rendering. I like exploring the creatures with a touch of dark
-            surrealism for characters and production.
-            <br />
-          </div>
-          {/* <Image
-            src="/images/vagabond.png"
-            width={500}
-            height={500}
-            alt="vagabond"
-            className={clsx(
-              "aspect-auto flex col-end-12 col-span-6 justify-self-end"
-            )}
-          /> */}
-        </div>
-      </section>
+      <AboutMe />
+      <CoreValue />
+      <Skills />
+      <MyArts />
     </div>
   );
 }
