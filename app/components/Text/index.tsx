@@ -15,6 +15,7 @@ export function TextHyperLink(props: Props) {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0 },
   };
+
   return (
     <div className={clsx("py-2 my-4 w-fit relative", styles.textContainer)}>
       <div className="overflow-hidden w-fit h-fit">

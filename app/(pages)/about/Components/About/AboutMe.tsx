@@ -1,10 +1,10 @@
 import { TextClip, TextHyperLink } from "@/app/components/Text";
-import { cubicBezier, easeInOut, motion, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const AboutMe = () => {
   const scrollRef = useRef(null);
-  const isInView = useInView(scrollRef, { once: true });
+  const isInView = useInView(scrollRef, { once: false, amount: 0.2 });
   const linkVariants = {
     hidden: { opacity: 1 },
     visible: {
@@ -17,35 +17,35 @@ const AboutMe = () => {
     hidden: { opacity: 1 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 1 },
+      transition: { staggerChildren: 0.15 },
     },
   };
 
   return (
     <section className="py-24 w-full h-full">
-      <div className="grid grid-cols-12 pt-48" ref={scrollRef}>
+      <div className="grid grid-cols-12 pt-48 mt-48" ref={scrollRef}>
         <motion.div className="relative col-span-11 col-start-0 mb-24 pr-4 overflow-hidden">
           <motion.div
-            className="absolute top-0 right-0 border-r-4 border-[#eb5930] z-10"
-            initial={{ opacity: 0, height: 0, borderStyle: "none" }}
-            whileInView={{
-              opacity: 1,
-              height: "100%",
-              borderStyle: "solid",
-            }}
-            transition={{
-              duration: 0.5,
-              delay: 1.5,
-              ease: cubicBezier(1, 0.02, 0.31, 1),
-            }}
-            viewport={{ root: scrollRef, amount: 0.8, once: true }}
+            className="absolute h-full top-0 right-0 border-r-4 border-[#eb5930] z-10"
+            // initial={{ opacity: 0, height: 0, borderStyle: "none" }}
+            // whileInView={{
+            //   opacity: 1,
+            //   height: "100%",
+            //   borderStyle: "solid",
+            // }}
+            // transition={{
+            //   duration: 0.5,
+            //   delay: 1.5,
+            //   ease: cubicBezier(1, 0.02, 0.31, 1),
+            // }}
+            // viewport={{ root: scrollRef, amount: 0.8, once: true }}
           ></motion.div>
           <motion.p
             className="text-end text-4xl tracking-wider font-semibold text-primary"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 2, ease: easeInOut }}
-            viewport={{ root: scrollRef, amount: 0.8, once: true }}
+            // initial={{ opacity: 0 }}
+            // whileInView={{ opacity: 1 }}
+            // transition={{ duration: 1, delay: 2, ease: easeInOut }}
+            // viewport={{ root: scrollRef, amount: 0.8, once: true }}
           >
             About me
           </motion.p>
