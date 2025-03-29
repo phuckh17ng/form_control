@@ -61,9 +61,9 @@ const CoreValue = () => {
             animate={isInView ? "visible" : "hidden"}
             variants={imageVariants}
             transition={{
-              ease: cubicBezier(1, 0.01, 0.9, 0.1),
-              duration: 1,
-              delay: 1,
+              ease: cubicBezier(1, 0.01, 0.75, 0.1),
+              duration: 0.75,
+              delay: 0.75,
             }}
           >
             <Image

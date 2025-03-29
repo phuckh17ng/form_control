@@ -67,7 +67,7 @@ const Skills = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={itemVariants}
-                transition={{ duration: 0.7 }}
+                transition={{ duration: 0.8 }}
               >
                 {item.type}
               </motion.div>
@@ -76,7 +76,11 @@ const Skills = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={strokeVariants}
-                transition={{ delay: index * 0.25, duration: 1 }}
+                transition={{
+                  delay: index * 0.3,
+                  duration: 1.5,
+                  ease: "easeOut",
+                }}
               />
               <div className="w-1/3 relative">
                 <motion.p
@@ -84,7 +88,7 @@ const Skills = () => {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                   variants={itemVariants}
-                  transition={{ duration: 0.7 }}
+                  transition={{ duration: 0.8 }}
                 >
                   {item.title}
                 </motion.p>
@@ -93,7 +97,7 @@ const Skills = () => {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                   variants={itemVariants}
-                  transition={{ duration: 0.7 }}
+                  transition={{ duration: 0.8 }}
                 >
                   {item.company}
                 </motion.p>
@@ -103,7 +107,7 @@ const Skills = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={itemVariants}
-                transition={{ duration: 0.7 }}
+                transition={{ duration: 0.8 }}
               >
                 {item.duration}
               </motion.div>
