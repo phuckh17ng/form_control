@@ -36,7 +36,7 @@ const list = [
 ];
 const Skills = () => {
   const scrollRef = useRef(null);
-  const isInView = useInView(scrollRef, { once: false, amount: 0.2 });
+  const isInView = useInView(scrollRef, { once: false, amount: 0.5 });
 
   const strokeVariants = {
     hidden: { width: 0 },

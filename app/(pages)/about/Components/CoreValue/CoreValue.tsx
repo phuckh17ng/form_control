@@ -20,7 +20,6 @@ const CoreValue = () => {
     hidden: { height: 0 },
     visible: {
       height: "100%",
-      transition: { duration: 0.75 },
     },
   };
   return (
@@ -61,7 +60,11 @@ const CoreValue = () => {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             variants={imageVariants}
-            transition={{ ease: cubicBezier(1, 0.02, 0.31, 1), duration: 0.3 }}
+            transition={{
+              ease: cubicBezier(1, 0.01, 0.9, 0.1),
+              duration: 1,
+              delay: 1,
+            }}
           >
             <Image
               src="/images/vagabond.png"
