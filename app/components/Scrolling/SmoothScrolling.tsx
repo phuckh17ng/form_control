@@ -12,7 +12,7 @@ const SmoothScrolling = (props: Props) => {
     <ReactLenis
       root
       options={{
-        lerp: 0.03,
+        lerp: 0.15,
         duration: 0.5,
         smoothWheel: true,
         autoResize: true,

@@ -36,7 +36,7 @@ const list = [
 ];
 const Skills = () => {
   const scrollRef = useRef(null);
-  const isInView = useInView(scrollRef, { once: false, amount: 0.5 });
+  const isInView = useInView(scrollRef, { once: false, amount: 0.35 });
 
   const strokeVariants = {
     hidden: { width: 0 },
@@ -53,7 +53,7 @@ const Skills = () => {
   return (
     <section className="py-24 w-full h-full">
       <div className="grid grid-cols-12 mt-24" ref={scrollRef}>
-        <div className="col-span-4 col-start-2 text-start text-4xl tracking-widest mb-24 border-l-4 pl-4 border-[#eb5930]">
+        <div className="font-semibold col-span-4 col-start-2 text-start text-4xl tracking-widest mb-24 border-l-4 pl-4 border-[#eb5930]">
           Work Experiences, Certificates & Awards
         </div>
         {list.map((item, index) => {
@@ -67,7 +67,7 @@ const Skills = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={itemVariants}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
               >
                 {item.type}
               </motion.div>
@@ -88,7 +88,7 @@ const Skills = () => {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                   variants={itemVariants}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
                 >
                   {item.title}
                 </motion.p>
@@ -97,7 +97,7 @@ const Skills = () => {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                   variants={itemVariants}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
                 >
                   {item.company}
                 </motion.p>
@@ -107,7 +107,7 @@ const Skills = () => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={itemVariants}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
               >
                 {item.duration}
               </motion.div>
