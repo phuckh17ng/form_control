@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { cookies } from "next/headers";
-import MainLayout from "./components/Layouts/MainLayout";
-import SmoothScrolling from "./components/Scrolling/SmoothScrolling";
-import "./globals.css";
-import ReactQueryProvider from "./providers/ReactQueryProvider";
+import MainLayout from "../components/Layouts/MainLayout";
+import SmoothScrolling from "../components/Scrolling/SmoothScrolling";
+import "../globals.css";
+import ReactQueryProvider from "../providers/ReactQueryProvider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 

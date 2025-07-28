@@ -7,6 +7,12 @@ const nextConfig = {
         hostname: "form-control-api.vercel.app",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "**",
+      },
     ],
   },
   async redirects() {
